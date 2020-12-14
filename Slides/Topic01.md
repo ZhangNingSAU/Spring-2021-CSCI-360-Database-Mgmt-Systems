@@ -62,3 +62,22 @@
 + On textbook "Learning MySQL", Chapter 2 introduces the installation of the LAMP platform in details.
 + In our class, we use the XAMPP application.
   - [XAMPP Tutorial](XAMPP%20Tutorial.md)
+
+# 3. Using the MySQL Monitor
++  client-server architecture
+  - clients connect to the server to perform database operations
+  
+  ![client-server architecture](https://www.oreilly.com/library/view/access-database-design/1565926269/tagoreillycom20070221oreillyimages86579.png)
+  
++ The standard MySQL command-line client or “monitor” program provided by MySQL AB is the client you’ll probably use the most often.
+  - The monitor allows you to control almost all aspects of database creation and maintenance using SQL and the custom MySQL extensions to SQL.
+
+## Starting the Monitor
++ The monitor program is called simply mysql and is found in a directory with the other MySQL programs. 
+  - The exact location depends on your operating system and how you chose to install MySQL
+  - you can also start it from XAMPP
+  
+  ![](../Resources/xamppwin.png)
+  
+  ![](../Resources/xamppmac.png)
+  
