@@ -75,9 +75,42 @@
 ## Starting the Monitor
 + The monitor program is called simply mysql and is found in a directory with the other MySQL programs. 
   - The exact location depends on your operating system and how you chose to install MySQL
-  - you can also start it from XAMPP
+    + you can locate the promgram from XAMPP directly
   
   ![](../Resources/xamppwin.png)
   
   ![](../Resources/xamppmac.png)
   
+  - from the command line, you type
+    ~~~~
+    mysql --user=root
+    ~~~~
+    
+    ![](../Resources/1.startmysql.png)
+    
+    + Note: I am using MAC, the mysql program may look different on Windows, but all the commands we use in this class will be the same.
+    + Note: The default password is NULL, if you have set up a password, you need to use the following command
+    ~~~~
+    mysql --user=root --password=the_mysql_root_password
+    ~~~~
+    
+## Commands
++ version of MySQL
+~~~~
+SELECT VERSION();
+~~~~
+
++ Note: Do NOT miss the ;
+
+![](../Resources/1.selectversion.png)
+
+
++ list all the databases 
+
+~~~~
+SHOW DATABASES;
+~~~~
+  
+![](../Resources/1.showdatabases.png)
+
++ 
