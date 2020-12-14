@@ -3,9 +3,9 @@
 # Topic 1: MySQL Introduction
 
 # Objectives:
-+ 1. Learn the basics of MySQL
-+ 2. Learn the installation of MySQL(XAMPP)
-+ 3. Learn how to use XAMPP and MySQL monitor
++ Learn the basics of MySQL
++ Learn the installation of MySQL(XAMPP)
++ Learn how to use XAMPP and MySQL monitor
 
 # 1. Basics of MySQL
 ## What is MySQL
