@@ -122,4 +122,37 @@ SHOW DATABASES;
   
 ![](../Resources/1.showdatabases.png)
 
-+ 
+## Style, Case, and Semicolons
++ A command-line command is a combination of 
+  - SQL keywords
+  - MySQL proprietary commands
+  - names of databases and database components
++ A command-line command is Not case-sensitive
+  - e.g.: **show databases** is equivalent to **SHOW DATABASE**
++ A command-line command follows conventions for better readibility.
+  - SQL keywords and MySQL proprietary commands are **UPPPERCASE**.
+  - names of databases and database components are **lowercase**.
++ A command-line command ends with the semicolon character (;).
+
+~~~~
+SELECT User, Host
+FROM user;
+~~~~
+
+## The Monitor HELP 
++ **HELP** lists commands the monitor understands.
+
+![](../Resources/1.help.png)
+
++ **HELP Contents** gets help on how to interact with the MySQL server. 
+
+![](../Resources/1.helpcontents.png)
+
++ **HELP Data Manipulation**  gets information on data manipulation
+
+![](../Resources/1.helpdatamanipulation.png)
+
++ **HELP SHOW DATABASES** gets information on SHOW DATABASES command
+
+![](../Resources/1.helpshowdatabases.png)
+
