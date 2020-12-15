@@ -156,3 +156,21 @@ FROM user;
 
 ![](../Resources/1.helpshowdatabases.png)
 
+## Running the Monitor in Batch Mode
++ run the following commands in interactive mode
+~~~~
+use mysql;
+SELECT COUNT(*) FROM user;
+~~~~
+
+![](../Resources/1.batch1.png)
+
++ run the commands in batch mode
+  - save the commands in a file with extension sql, e.g., count_users.sql
+  - run the file using the followng command
+  ~~~~
+  SOURCE count_users.sql
+  ~~~~
+  - Note: you need to specify the full path of the sql file if it is not in the current directory. The current directory is the directory when you open the terminal(MAC) or shell(windows). On my Mac, I created the file on the desktop, so the full path is "~/Desktop/count_users.sql". If you use Windows, the full path may look like "C:\folder_name\count_users.sql".
+  
+![](../Resources/1.batch2.png)
