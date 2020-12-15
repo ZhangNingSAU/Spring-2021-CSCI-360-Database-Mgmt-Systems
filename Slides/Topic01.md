@@ -171,6 +171,17 @@ SELECT COUNT(*) FROM user;
   ~~~~
   SOURCE count_users.sql
   ~~~~
-  - Note: you need to specify the full path of the sql file if it is not in the current directory. The current directory is the directory when you open the terminal(MAC) or shell(windows). On my Mac, I created the file on the desktop, so the full path is "~/Desktop/count_users.sql". If you use Windows, the full path may look like "C:\folder_name\count_users.sql".
+    + Note: 
+      - If you do NOT use XAMPP, you need to specify the full path of the sql file if it is not in the current directory. The current directory is the directory when you open the terminal(MAC) or shell(windows). On my Mac, I created the file on the desktop, so the full path is "~/Desktop/count_users.sql". If you use Windows, the full path may look like "C:\folder_name\count_users.sql".
+      - In our class, we use XAMPP, so if you want to execute the file, create/put it in the following folder.
+    
+      ![](../Resources/1.htdocs.png)
+    
+      - To find the folder, click **Explore**
+    
+      ![](../Resources/1.explore.png)
+    
+  - run the file using its full path
   
-![](../Resources/1.batch2.png)
+  ![](../Resources/1.batch2.png)
+  
