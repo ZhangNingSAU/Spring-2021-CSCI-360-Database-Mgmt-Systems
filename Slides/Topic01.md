@@ -81,6 +81,8 @@
   
   ![](../Resources/xamppmac.png)
   
+  ![](../Resources/1.startterminal.png)
+  
   - from the command line, you type
     ~~~~
     mysql --user=root
@@ -93,7 +95,14 @@
     ~~~~
     mysql --user=root --password=the_mysql_root_password
     ~~~~
-    
+## Stoping the Monitor
+
+~~~~
+exit;
+~~~~
+
+![](../Resources/1.stopmonitor.png)
+
 ## Commands
 + version of MySQL
 ~~~~
