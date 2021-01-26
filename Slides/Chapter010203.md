@@ -236,6 +236,6 @@ SELECT COUNT(*) FROM user;
     DELETE FROM user;
     ~~~~
 ## Graphical Clients
-+ [MySQL Administrator](http://dev .mysql.com/downloads)
-+ [MySQL Query Browser](http://dev .mysql.com/downloads)
++ [MySQL Administrator](http://dev.mysql.com/downloads)
++ [MySQL Query Browser](http://dev.mysql.com/downloads)
 + XAMPP(we use XAMPP in our class, see [XAMPP Tutorial](XAMPP%20Tutorial.md) to learn how to open the graphical clients on the web browser.)
