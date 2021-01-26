@@ -56,6 +56,8 @@
 + Perl or PHP scripting language.
 
 ## Structured Query Language
++ language developed by IBM
++ still used today to interact with relational databases
 
 
 # 2. Installation of MySQL
@@ -99,6 +101,12 @@
 
 ~~~~
 exit;
+~~~~
+
+or 
+
+~~~~
+quit;
 ~~~~
 
 ![](../Resources/1.stopmonitor.png)
@@ -185,3 +193,49 @@ SELECT COUNT(*) FROM user;
   
   ![](../Resources/1.batch2.png)
   
+## Loading the Sample Databases
+  - Download music.sql from http://tahaghoghi.com/LearningMySQL/downloads.php
+  - Put the sql file in the correct folder
+  - Run the file
+  
+  ~~~~
+  source /opt/lampp/htdocs/music.sql 
+  ~~~~
+  
+## MySQL Monitor Program Options
++ The monitor program can take several parameters
+  - host
+    + The host the server is running on; you can leave this out if the server is running on the same host as the client (localhost).
+  - user
+    + The username to use when connecting to the MySQL server
+  - password
+    + The password of this user
+      - no password
+      ~~~~
+      mysql --user=the_username
+      ~~~~
+      - prompt you for a password
+      ~~~~
+      mysql --user=the_username --password
+      ~~~~
+      - provide password with username
+      ~~~~
+      mysql --user=the_username --password=correct_password
+      ~~~~
+  - database
+    ~~~~
+    mysql --user=root --database=mysql
+    ~~~~
+    or
+    ~~~~
+    mysql --user=root mysql
+    ~~~~
+  - safe-updates
+    + the following command will be prevented.
+    ~~~~
+    DELETE FROM user;
+    ~~~~
+## Graphical Clients
++ [MySQL Administrator](http://dev .mysql.com/downloads)
++ [MySQL Query Browser](http://dev .mysql.com/downloads)
++ XAMPP(we use XAMPP in our class, see [XAMPP Tutorial](XAMPP%20Tutorial.md) to learn how to open the graphical clients on the web browser.)
