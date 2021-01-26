@@ -47,7 +47,7 @@
   - Programming languages
     + a general-purpose programming language such as PHP or Perl to automatically create and execute SQL queries on the MySQL server.
   - Web database applications
-    + you can use PHP or Perl to create dynamic, database-driven web applications that can publish information from the database to the Web, and cap- ture information provided by users.
+    + you can use PHP or Perl to create dynamic, database-driven web applications that can publish information from the database to the Web, and capture information provided by users.
 
 ## The LAMP Platform
 + Linux operating system
