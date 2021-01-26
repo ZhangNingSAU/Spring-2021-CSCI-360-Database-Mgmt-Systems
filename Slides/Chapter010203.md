@@ -40,7 +40,7 @@
       - web server vs. database server
         ![web server vs. database server](https://docs.oracle.com/cd/E24150_01/pt851h2/eng/psbooks/tsvt/img/gv_DistinctTiersOfArchitectureStartingWithDatabaseMovingToApplicati_tsvt7fff.png)
   
-+  Four aspects of using MySQL
++ Four aspects of using MySQL
   - MySQL server
   - SQL
     + core of MySQL use
