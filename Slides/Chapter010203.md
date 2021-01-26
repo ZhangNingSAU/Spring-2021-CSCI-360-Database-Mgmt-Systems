@@ -1,6 +1,6 @@
 # CSCI 360 Spring 2021
 # Dr. Ning Zhang
-# MySQL Introduction
+# Chapters 1,2,3 MySQL Introduction
 
 # Objectives:
 + Learn the basics of MySQL
