@@ -2,7 +2,11 @@
 # Chapter 4: Modeling and Designing Databases
 # How NOT to develop a database
 + Q: quick design vs. good design
-+ 
++ Example:
+  - Version 1
+  |GivenNames|Surname|CourseName|Pctg|
+  |---|---|---|---|
+  |a|b|c|d|
 # The Database Design Process
 # The Entity Relationship Model
 ## Representing Entities
