@@ -4,9 +4,11 @@
 + Q: quick design vs. good design
 + Example:
   - Version 1
+  
   |GivenNames|Surname|CourseName|Pctg|
   |---|---|---|---|
   |a|b|c|d|
+  
 # The Database Design Process
 # The Entity Relationship Model
 ## Representing Entities
