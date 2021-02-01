@@ -84,7 +84,7 @@
   - Logical design
     + map the database design onto an actual database management system and database tables
 # The Entity Relationship Model
-+ A model which can help transform the requirements into a formal description of the entities and relationships that appear in the database.
++ A model which can help transform the requirements into a formal description of the entities and relationships(conceptual design) that appear in the database.
 + Entities
   - distinct objects
 + Relationships
@@ -94,6 +94,27 @@
   - Entities: Student and Course
   - Relationship: Enrollment
 ## Representing Entities
+Note: the tool I use here is an online tool called [erdplus](https://erdplus.com/). You can use other tools to create ER models.
++ entity set 
+  - a rectangle containing the entity name
+  
+  ![entity](../Resources/4-entity.png)
+  
++ attributes
+  - Attributes describe the entity
+  - you need to understand different types of attributes
+    + simple attributes: an simple oval
+    + composed attributes: an oval(sometimes the attribute name is surrounded by a pair of ()) connected by other ovals(these are simple attributes)
+    + multivalued attribute: two ovals
+    + key: 
+      - candidate keys
+      - primary key: an oval with underlined name
+  - attribute characteristics
+    + Attribute values are chosen from a **domain** of legal values
+    + Attributes can be empty(NULL value), but primary key must be **NOT NULL**.
+    + You should think carefully when classifying an attribute as multivalued
+    + For some applications, no combination of attributes can uniquely identify an entity (or it would be too unwieldy to use a large composite key), so we create an artificial attribute.
+  ![attribute](../Resources/4-attribute.png)
 ## Representing Relationships
 ## Partial and Total Participation
 ## Entity or Attribute?
