@@ -116,7 +116,20 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
     + For some applications, no combination of attributes can uniquely identify an entity (or it would be too unwieldy to use a large composite key), so we create an artificial attribute.
   ![attribute](../Resources/4-attribute.png)
 ## Representing Relationships
-## Partial and Total Participation
++ Types of relationships
+  - one-to-one(1:1)
+  - one-to-many(1:N)
+  - many-to-many(M:N)
++ In an ER diagram, we represent a relationship set with a named diamond。
++ The number of entities on either side of a relationship (the cardinality of the relation- ship) define the key constraints of the relationship.
+  
+![relationship](../Resources/4-relationship.png)
+  
+## Partial and Total Participation(Mandatory and optional relationships)
++ Relationships between entities can be optional or compulsory.
++ Example:
+  - We could decide that a person is considered to be a customer only if they have bought a product(Total Participation).
+  - We can have people listed as customers in our database who never buy a product(Partial Participation). 
 ## Entity or Attribute?
 ## Entity or Relationship?
 ## Intermediate Entities
