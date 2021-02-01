@@ -19,3 +19,4 @@
 + Amber Meyer
 + Timeon Oyeyemi
 + Tanner Jonassen
++ William Kacynski
