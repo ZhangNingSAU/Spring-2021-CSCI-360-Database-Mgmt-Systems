@@ -4,6 +4,8 @@
 + Q: quick design vs. good design
 + Example:
   - Version 1
+    + Problem: students with the same name
+    + Solution: unique ID
   
   |GivenNames|Surname|CourseName|Pctg|
   |---|---|---|---|
@@ -16,10 +18,11 @@
   |Susan|Smith|Programming 1|55|
   |Susan|Smith|Computing Mathematics|80|
   
-    + Problem: students with the same name
-    + Solution: unique ID
+    
   
   - Version 2
+    + Problem: no order
+    + Solution: more column(s)
   
   |StudentId|GivenNames|Surname|CourseName|Pctg|
   |---|---|---|---|---|
@@ -32,10 +35,11 @@
   |12345876|Susan|Smith|Programming 1|55|
   |12345303|Susan|Smith|Computing Mathematics|80|
   
-    + Problem: no order
-    + Solution: more column(s)
+    
     
   - Version 3
+    + Problem: bloated
+    + Solution: split up the information
   
   |StudentId|GivenNames|Surname|CourseName|Year|Sem|Pctg|
   |---|---|---|---|---|---|---|
@@ -48,9 +52,10 @@
   |12345876|Susan|Smith|Programming 1|2005|2|55|
   |12345303|Susan|Smith|Computing Mathematics|2006|1|80|
   
-    + Problem: bloated
-    + Solution: split up the information
+    
   - Version 4
+    + Problem: other information?
+    + Solution: keep adding more columns or tables
   
   |StudentId|GivenNames|Surname|
   |---|---|---|
@@ -70,8 +75,7 @@
   |12345876|Programming 1|2005|2|55|
   |12345303|Computing Mathematics|2006|1|80|
   
-    + Problem: other information?
-    + Solution: keep adding more columns or tables
+    
   
 # The Database Design Process
 + three major stages in database design
