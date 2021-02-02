@@ -127,16 +127,39 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
 + In an ER diagram, we represent a relationship set with a named diamond。
 + The number of entities on either side of a relationship (the cardinality of the relation- ship) define the key constraints of the relationship.
   
-![relationship](../Resources/4-relationship.png)
+![relationship2](../Resources/4-relationship2.png)
   
 ## Partial and Total Participation(Mandatory and optional relationships)
 + Relationships between entities can be optional or compulsory.
 + Example:
   - We could decide that a person is considered to be a customer only if they have bought a product(Total Participation).
   - We can have people listed as customers in our database who never buy a product(Partial Participation). 
+  
+  ![relationship](../Resources/4-relationship.png)
+  
 ## Entity or Attribute?
++ Is the item of direct interest to the database?
+  - Objects of direct interest should be entities
+  - Information that describes them should be stored in attributes.
++ Does the item have components of its own?
+  - If so, a separate entity might be the best solution.
++ Can the object have multiple instances?
+  - If so, the cleanest way to do this is to represent the object as a separate entity.
++ Is the object often nonexistent or unknown?
+  - If so, it is effectively an attribute of only some of the entities, and it would be better to model it as a separate entity rather than as an attribute that is often empty.
+  
+  ![student](../Resources/4-student.png)
+  
+  ![student2](../Resources/4-student2.png)
+  
+  
 ## Entity or Relationship?
++ An easy way to decide whether an object should be an entity or a relationship is to map nouns in the requirements to entities, and to map the verbs to relations.
++ Example: “A degree program is made up of one or more courses,” 
+  - entities: degree and course
+  - relationship: is made up of
 ## Intermediate Entities
++ It is often possible to conceptually simplify many-to-many relationships by replacing the many-to-many relationship with a new intermediate entity (sometimes called an associate entity) and connecting the original entities through a many-to-one and a one- to-many relationship.
 ## Weak and Strong Entities
 # Entity Relationship Modeling Examples
 # Using the Entity Relationship Model
