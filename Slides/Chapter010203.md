@@ -197,10 +197,14 @@ SELECT COUNT(*) FROM user;
   - Download music.sql from http://tahaghoghi.com/LearningMySQL/downloads.php
   - Put the sql file in the correct folder
   - Run the file
-  
-  ~~~~
-  source /opt/lampp/htdocs/music.sql 
-  ~~~~
+    + MacOS
+    ~~~~
+    source /opt/lampp/htdocs/music.sql 
+    ~~~~
+    + Windows
+    ~~~~
+    source C:\xampp\htdocs\music.sql 
+    ~~~~
   
 ## MySQL Monitor Program Options
 + The monitor program can take several parameters
