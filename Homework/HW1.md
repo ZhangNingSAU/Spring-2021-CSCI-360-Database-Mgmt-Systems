@@ -7,6 +7,7 @@
 # Q3: Download a sql file from http://tahaghoghi.com/LearningMySQL/downloads.php, and run the commands in this file in batch mode.
 + Note: you can choose any one.
 # Q4: Use either a command in the Monitor or the XAMPP Graphical Client to show the database has been created successfully.
++ Note: you need to show the database exists in the DBMS.
 
 # Step 1: Complete Q1-Q4, take a screenshot for each step.
 # Step 2: Save screenshots in a PDF file(you can copy them in Word or Pages, then print that file as PDF), name it according to the requirement in the syllabus.
