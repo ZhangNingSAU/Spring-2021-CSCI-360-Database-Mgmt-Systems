@@ -180,6 +180,14 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
 
 ![4-weak.png](../Resources/4-weak.png)
 
+## Summary of ER Diagram Symbols
++ EDRPlus
+
+![4-symbols.png](../Resources/4-symbols.png)
+
++ Textbook
+
+![4-symbols2.png](../Resources/4-symbols2.png)
 
 # Entity Relationship Modeling Examples
 # Using the Entity Relationship Model
