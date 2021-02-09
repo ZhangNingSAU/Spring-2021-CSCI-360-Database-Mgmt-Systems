@@ -190,7 +190,39 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
 ![4-symbols2.png](../Resources/4-symbols2.png)
 
 # Entity Relationship Modeling Examples
++ The music database**
++ The flight database
++ The  **university database** captures the details of students, courses, and grades for a university.
+  - university students
+  - courses
+  - the semester a student took a particular course (and his mark and grade if he completed it)
+  - what degree program each student is enrolled in
+
+## Step 1: draw up a clear list of requirements for the database
++ The university offers one or more programs.
++ A program is made up of one or more courses.
++ A student must enroll in a program.
++ A student takes the courses that are part of her program.
++ A program has a name, a program identifier, the total credit points required to graduate, and the year it commenced.
++ A course has a name, a course identifier, a credit point value, and the year it commenced.
++ Students have one or more given names, a surname, a student identifier, a date of birth, and the year they first enrolled. We can treat all given names as a single object —for example, “John Paul.”
++ When a student takes a course, the year and semester he attempted it are recorded. When he finishes the course, a grade (such as A or B) and a mark (such as 60 percent) are recorded.
++ Each course in a program is sequenced into a year (for example, year 1) and a semester (for example, semester 1).
+## Step 2: conceptual design/ER model
+
+![4-university.png](../Resources/4-university.png)
+
 # Using the Entity Relationship Model
+## Step 3: Mapping Entities and Relationships to Database Tables
++ Step 3.1: Map the entities to database tables
+  - For each strong entity, create a table comprising its attributes and designate the primary key. The parts of any composite attributes are also included here.
+  - For each weak entity, create a table comprising its attributes and including the primary key of its owning entity. The primary key of the owning entity is known as a foreign key here, because it’s a key not of this table, but of another table. The primary key of the table for the weak entity is the combination of the foreign key and the partial key of the weak entity. If the relationship with the owning entity has any attributes, add them to this table.
+  - For each multivalued attribute of an entity, create a table comprising the entity’s pri- mary key and the attribute.
++ Step 3.2: Map the relationships to database tables
+  - For each one-to-one relationship between two entities, include the primary key of one entity as a foreign key in the table belonging to the other. If one entity participates totally in the relationship, place the foreign key in its table. If both participate totally in the relationship, consider merging them into a single table.
+  - For each nonidentifying one-to-many relationship between two entities, include the primary key of the entity on the “1” side as a foreign key in the table for the entity on the “N” side. Add any attributes of the relationship in the table alongside the foreign key. Note that identifying one-to-many relationships (between a weak entity and its owning entity) are captured as part of the entity-mapping stage.
+  - For each many-to-many relationship between two entities, create a new table contain- ing the primary key of each entity as the primary key, and add any attributes of the relationship. This step helps to identify intermediate entities.
+  - For each relationship involving more than two entities, create a table with the primary keys of all the participating entities, and add any attributes of the relationship.
 ## Using Tools for Database Design
 + MySQL Workbench
   - [Download MySQL Workbench](https://dev.mysql.com/downloads/workbench/)
