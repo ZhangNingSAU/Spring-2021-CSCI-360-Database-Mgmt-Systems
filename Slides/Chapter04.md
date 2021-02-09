@@ -159,8 +159,28 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
   - entities: degree and course
   - relationship: is made up of
 ## Intermediate Entities
-+ It is often possible to conceptually simplify many-to-many relationships by replacing the many-to-many relationship with a new intermediate entity (sometimes called an associate entity) and connecting the original entities through a many-to-one and a one- to-many relationship.
++ It is often possible to conceptually simplify many-to-many relationships by replacing the many-to-many relationship with a new intermediate entity (sometimes called an associate entity) and connecting the original entities through a many-to-one and a one-to-many relationship.
++ Example: A passenger can book a seat on a flight(many-to-many).
+  - Any given flight can have many passengers with a booking.
+  - Any given passenger can have bookings on many flights.
+  
+  ![4-intermediate1.png](../Resources/4-intermediate1.png)
+  
+  - intermediate entity: the booking
+    + Each passenger can be involved in multiple bookings, but each booking belongs to a single passenger(one-to-many).
+    + there can be many bookings for a given flight, but each booking is for a single flight(one-to-many).
+    + Since each booking must be associated with a par- ticular passenger and flight, the booking entity participates totally in the relationships with these entities. This total participation could not be captured effectively in the representation in figure above.
+    
+    ![4-intermediate2.png](../Resources/4-intermediate2.png)
+  
 ## Weak and Strong Entities
++ In database design, we can omit some key information for (week) entities that are dependent on other (strong) entities.
++ The relationship between a week entity and a strong entity is called an **identifying relationship**.
++ In the ER diagram, we show weak entities and identifying relationships with double lines, and the partial key of a weak entity with a dashed underline.
+
+![4-weak.png](../Resources/4-weak.png)
+
+
 # Entity Relationship Modeling Examples
 # Using the Entity Relationship Model
 ## Using Tools for Database Design
