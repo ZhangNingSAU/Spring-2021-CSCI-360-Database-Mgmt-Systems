@@ -1,5 +1,5 @@
 # CSCI360 Spring 2021
-# Homework 1
+# Homework 1 for Chapters 1,2,3
 # due: 11:59pm 02/16/2021
 
 # Q1: Launch XAMPP application and start services.
