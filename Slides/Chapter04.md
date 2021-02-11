@@ -229,4 +229,6 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
     + If you need to use an older version, click on the **Archive** tab.
   - [How To Connect To MySQL Server After Install XAMPP On Mac OS](https://www.dev2qa.com/how-to-connect-to-mysql-server-after-install-xampp-on-mac-os/#:~:text=After%20download%20XAMPP%20mac%20os,and%20ftp%20server%20as%20service.)
   -[create a new user](https://stackoverflow.com/questions/1559955/host-xxx-xx-xxx-xxx-is-not-allowed-to-connect-to-this-mysql-server)
+  
++ We will learn how to use MySQL Workbench to create a database in [Chapter 6](./Chapter6.md).
 
