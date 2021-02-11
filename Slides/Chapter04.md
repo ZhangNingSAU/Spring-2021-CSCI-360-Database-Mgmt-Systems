@@ -193,7 +193,6 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
 + The music database
 
 
-![4-music.png](../Resources/4-music.png)
 
 
 + The flight database
