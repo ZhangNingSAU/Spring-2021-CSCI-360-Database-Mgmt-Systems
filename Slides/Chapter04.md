@@ -190,7 +190,7 @@ Note: the tool I use here is an online tool called [erdplus](https://erdplus.com
 ![4-symbols2.png](../Resources/4-symbols2.png)
 
 # Entity Relationship Modeling Examples
-+ The music database**
++ The music database
 + The flight database
 + The  **university database** captures the details of students, courses, and grades for a university.
   - university students
