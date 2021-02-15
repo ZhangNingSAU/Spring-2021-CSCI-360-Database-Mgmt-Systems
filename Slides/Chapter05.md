@@ -69,7 +69,72 @@
 
 ## Choosing Rows with the WHERE Clause
 ### WHERE basics
++ Used to return rows that match a condition
++ Example
+  - find out the details of the artist with the name “New Order.”
+
+  ![where1](../Resources/5-where1.png)
+  
+  - find out the name of the artist with an artist_id value of 4.
+  
+  ![where2](../Resources/5-where2.png)
+  
+  - more where conditions
+  
+  ~~~~
+  SELECT track_name FROM track WHERE track_id = 13;
+  SELECT artist_name FROM artist WHERE artist_id < 5;
+  SELECT album_name FROM album WHERE album_id <> 2;
+  ~~~~
+
++ Operators
+  - equals (=)
+  - greater than (>)
+  - less than (<)
+  - less than or equal (<=)
+  - greater than or equal (>=)
+  - not equal (<> or !=)
++ Note: you can us the operators both for numbers and strings.
+
+~~~~
+SELECT artist_name FROM artist WHERE artist_name < 'M';
+~~~~
+
++ String match/wild cards
+  - percentage character (%): zero or more characters
+  
+  ![like](../Resources/5-like.png)
+  
+  - underscore character (\_): exactly one character
+    + Note that there are two underscores and one spacebar in the following example.
+
+  ![like2](../Resources/5-lik2.png)
+
+
+
 ### Combining conditions with AND, OR, NOT, and XOR
+
+~~~~
+SELECT album_name FROM album WHERE album_name > "C" AND album_name < "M";
+
+SELECT album_name FROM album WHERE album_name LIKE "L%" OR album_name LIKE "S%" OR album_name LIKE "P%";
+~~~~
+~~~~
+SELECT album_name FROM album WHERE album_name LIKE "L%" OR album_name LIKE "S%" AND album_name LIKE "%g";
+
+SELECT album_name FROM album WHERE album_name LIKE "L%" OR (album_name LIKE "S%" AND album_name LIKE "%g");
+
+SELECT album_name FROM album WHERE (album_name LIKE "L%" OR album_name LIKE "S%") AND album_name LIKE "%g";
+~~~~
+~~~~
+SELECT * FROM album WHERE NOT (album_id = 1 OR album_id = 3);
+
+SELECT * FROM album WHERE NOT (album_id = 1) AND NOT (album_id = 3);
+
+SELECT * FROM album WHERE album_id != 1 AND album_id != 3;
+
+SELECT * FROM album WHERE album_id != 1 AND NOT (album_id = 3);
+~~~~
 ## ORDER BY Clauses
 ## The LIMIT Clause
 ## Joining Two Tables
