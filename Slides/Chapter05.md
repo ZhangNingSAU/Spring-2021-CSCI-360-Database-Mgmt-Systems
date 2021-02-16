@@ -108,7 +108,7 @@ SELECT artist_name FROM artist WHERE artist_name < 'M';
   - underscore character (\_): exactly one character
     + Note that there are two underscores and one spacebar in the following example.
 
-  ![like2](../Resources/5-lik2.png)
+  ![like2](../Resources/5-like2.png)
 
 
 
@@ -136,7 +136,72 @@ SELECT * FROM album WHERE album_id != 1 AND album_id != 3;
 SELECT * FROM album WHERE album_id != 1 AND NOT (album_id = 3);
 ~~~~
 ## ORDER BY Clauses
++ sort the results if we want them in a particular order.
++ Sorting has no effect on what is returned, and only affects what order the results are returned.
++ The ORDER BY clause indicates that sorting is required, followed by the column that should be used as the sort key.
++ The default sort is case-insensitive and in ascending order.
+
+![orderby1](../Resources/5-orderby1.png)
+
++ Multiple sort keys.
+  - If the values of the first key are the same, the order will be determined by the second key.
+  
+![orderby2](../Resources/5-orderby2.png)
+
++ sort in descending order
+
+![orderby3](../Resources/5-orderby3.png)
+
++ a mixture of ascending and descending orders
+  - Note: WHERE always appears before ORDER BY in the SELECT statement.
+
+![orderby4](../Resources/5-orderby4.png)
+
++ If you do want sorting to behave like ASCII does, you can add a BINARY keyword.
+  - Example 1:
+  ~~~~
+  SELECT * FROM artist ORDER BY BINARY artist_name;
+  ~~~~
+  - Example 2: searching for tracks with names alphabetically earlier than the letter b(Compare the following two queries)
+  
+  ~~~~
+  SELECT track_name FROM track WHERE track_name < 'b';
+  SELECT track_name FROM track WHERE track_name < BINARY 'b';
+  ~~~~
+
++ Treat a column as a different data type
+  - Example: you want to sort the track table by ascending time, but you want the times to be treated as strings. 
+  
+  ![orderby5](../Resources/5-orderby5.png)
+  
+  - data types
+  
+  ~~~~
+  • AS BINARY, to sort as binary, which has the same effect as ORDER BY BINARY • AS SIGNED, to sort as a signed integer
+  • AS UNSIGNED, to sort as an unsigned integer
+  • AS CHAR, to sort as a character string
+  • AS DATE, to sort as a date
+  • AS DATETIME, to sort as a date and time • AS TIME, to sort as a time
+  ~~~~
+  
+
+
+
 ## The LIMIT Clause
++ The LIMIT clause is a useful, nonstandard SQL tool that allows you to control which rows are output.
++ Example 1: only display the first 10 rows
+
+![limit1](../Resources/5-limit1.png)
+
++ Example 2: display 10 rows, starting from the 6th row(note the index starts from 0)
+
+![limit1](../Resources/5-limit2.png)
+
++ Example 3: choose a start point, the display to the end of the table(you do not know how many rows, you can choose a relatively large number. Technically, the largest number you can use is 18446744073709551615).
+
+![limit3](../Resources/5-limit3.png)
+
+
 ## Joining Two Tables
 # The INSERT Statement
 
