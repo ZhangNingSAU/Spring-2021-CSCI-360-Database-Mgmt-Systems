@@ -464,7 +464,9 @@ UPDATE played SET played = NULL ORDER BY played DESC LIMIT 10;
 
 # Exploring Databases and Tables with SHOW and mysqlshow
 + SHOW DATABASE
+
 ![showdatabases](../Resources/1.showdatabases.png)
+
 + mysqlshow: You can get the same effect from the command line using the mysqlshow program.
 ~~~~
 mysqlshow --user=root --password=the_mysql_root_password
