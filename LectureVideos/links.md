@@ -16,3 +16,10 @@ https://stambrose.webex.com/recordingservice/sites/stambrose/recording/ef1e67688
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/10cc69da04f14d9d84657de0deb626b2
 ##  Thursday 2/11/2021
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/5538b6101a4b4cb5ac09a10e2e96b0b2
+
+
+# Week 4
+## Tuesday 2/16/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/c171eee635204f82a6a7b0a035ffc85c
+## Thursday 2/18/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/9f7a6dd8dc8743ddb42ba5b34ef54ad9
