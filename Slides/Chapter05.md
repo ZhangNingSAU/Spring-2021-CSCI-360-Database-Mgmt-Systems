@@ -217,11 +217,11 @@ SELECT * FROM album WHERE album_id != 1 AND NOT (album_id = 3);
 
 + important issues
   - It works only when two tables share a column with the same name that you can use as the join condition; otherwise, you must use an alternative syntax described in [Chapter 7](../Slides/Chapter07.md)
-  - The result rows shown are those where the join column (or columns) match be- tween the tables; rows from one table that don’t have a match in the other table are ignored.
+  - The result rows shown are those where the join column (or columns) match between the tables; rows from one table that don’t have a match in the other table are ignored.
   - With the exception of the join column or columns after the USING keyword, any columns you specify must be unambiguous. 
     + What if we want artist\_id?
   - Don’t forget the USING clause.
-  - The column or columns following the USING clause must be surrounded by paren- theses.
+  - The column or columns following the USING clause must be surrounded by parentheses.
 
 + Example 2: list the track names for all your albums
 
