@@ -207,6 +207,9 @@ SELECT * FROM album WHERE album_id != 1 AND NOT (album_id = 3);
 + We learn only one join(inner join) in this chapter, we'll learn more in [Chapter 7](../Slides/Chapter07.md)
 + syntax
   - two table names separated by the INNER JOIN keywords
+  - 
+    ![inner join](https://www.w3schools.com/sql/img_innerjoin.gif)
+    
   - the USING keyword that indicates which column (or columns) holds the relationship between the two tables
 + Example 1:
 
