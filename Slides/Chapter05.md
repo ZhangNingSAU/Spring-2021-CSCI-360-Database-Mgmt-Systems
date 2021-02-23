@@ -326,7 +326,7 @@ INSERT INTO track VALUES (1, "Diamonds", 7, 1, 4.10),
                           (4, "From Rusholme With Love", 7, 1, 3.59);
 ~~~~
 
-+ Note: The INSERT operation stops on the first duplicate key. You can add an IGNORE clause to prevent the error if you want. If you use INSERT IGNORE andtrytoinsertaduplicaterecord—forwhichtheprimarykeymatchesthat of an existing row—then MySQL will quietly skip inserting it and report it as a duplicate in the second entry on the final line.
++ Note: The INSERT operation stops on the first duplicate key. You can add an IGNORE clause to prevent the error if you want. If you use INSERT IGNORE and try to insert a duplicate record for which the primary key matches that of an existing row, then MySQL will quietly skip inserting it and report it as a duplicate in the second entry on the final line.
 
 ~~~~
 INSERT IGNORE INTO track VALUES (1, "Diamonds", 7, 1, 4.10),
