@@ -205,12 +205,20 @@ SELECT * FROM album WHERE album_id != 1 AND NOT (album_id = 3);
 ## Joining Two Tables
 + working with the relationships between tables to answer information needs
 + We learn only one join(inner join) in this chapter, we'll learn more in [Chapter 7](../Slides/Chapter07.md)
+
+![inner join](https://www.w3schools.com/sql/img_innerjoin.gif)
+
+
 + syntax
   - two table names separated by the INNER JOIN keywords
-  - 
-    ![inner join](https://www.w3schools.com/sql/img_innerjoin.gif)
-    
   - the USING keyword that indicates which column (or columns) holds the relationship between the two tables
++ Note: to create a join query, you can use the ER model to help you understand which tables we need. You can use either the ER model we created in chapter 4 or an alternative which shows all the attributes of a table.
+
+![music](../Resources/4-music.png)
+
+
+![musicer2](../Resources/5-musicer2.png)
+
 + Example 1:
 
 ![join1](../Resources/5-join1.png)
