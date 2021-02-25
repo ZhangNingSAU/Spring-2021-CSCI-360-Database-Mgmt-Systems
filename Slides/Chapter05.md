@@ -304,6 +304,14 @@ INSERT INTO artist
 VALUES((SELECT 1+MAX(artist_id) FROM artist), "Barry Adamson");
 ~~~~
 
++ The statement above does not work, this is a typical MySQL thing, it can be solved by the following statement (the AS keyword)
+~~~~
+INSERT INTO artist
+VALUES((SELECT 1+MAX(artist_id) FROM artist AS max_id), "Barry Adamson");
+~~~~
+
+https://stackoverflow.com/questions/44970574/table-is-specified-twice-both-as-a-target-for-update-and-as-a-separate-source/44971214
+
 + Another example(we need it for the bulk-load insertion example)
 
 ~~~~
