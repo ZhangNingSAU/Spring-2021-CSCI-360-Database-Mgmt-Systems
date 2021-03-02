@@ -10,7 +10,7 @@
 3. Print the album id, track id, and the played date and time for the tracks that were played before August 15, 2006. <br>
 4. Print the name and time for the 5th track in the album with id=5.<br>
 5. Print the information for tracks that start with 'L' and end with 't'. <br>
-6. Print the information for tracks, and sort the result by descending artist id and alphabetically increasing album name. <br>
+6. Print the information for tracks, and sort the result by descending artist id and alphabetically increasing track name. <br>
 7. Sort the tracks by alphabetically increasing album name, and print the information from the 100th track to 200th track. <br>
 8. Print the artist names whose songs have been played. (You may have duplicate names, we will learn how to display unique value later.)<br>
 9. Insert two new artists(choose two artists you like).<br>
