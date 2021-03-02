@@ -124,7 +124,7 @@ CREATE DATABASE music DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_cs;
   - An additional default ENGINE clause is included, which explicitly states the table type that should be used. The setting in a default installation of MariaDB(XAMPP platform) is InnoDB, while MyISAM for MySQL.
   - AnadditionalDEFAULT CHARSET=latin1 clause is included.
 
-![6-SHOW CREATE TABLE artist](../Resources/6-SHOW CREATE TABLE artist.png)
+![showcreatetable](../Resources/6-showcreatetable.png)
 
 
 ## Column Types
