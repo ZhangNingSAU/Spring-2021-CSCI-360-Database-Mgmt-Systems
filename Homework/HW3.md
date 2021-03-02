@@ -5,7 +5,7 @@
 # Database: this homework is based on the MUSIC database in the textbook.
 + Note: Make sure that you reload the music database once before executing the following sql statements.
 # Queries
-1. Print the column information in table **Played**.<br>
+1. Print the column information in table **played**.<br>
 2. Print the id and name for each album. <br>
 3. Print the album id, track id, and the played date and time for the tracks that were played before August 15, 2006. <br>
 4. Print the name and time for the 5th track in the album with id=5.<br>
@@ -14,7 +14,7 @@
 7. Sort the tracks by alphabetically increasing album name, and print the information from the 100th track to 200th track. <br>
 8. Print the artist names whose songs have been played. (You may have duplicate names, we will learn how to display unique value later.)<br>
 9. Insert two new artists(choose two artists you like).<br>
-10. Insert the following instance to table **Played**.
+10. Insert the following instance to table **played**.
 ~~~~
 artist_id = 2, album_id = 1, track_id = 3, no date and time for played.
 ~~~~
