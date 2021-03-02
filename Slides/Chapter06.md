@@ -56,7 +56,7 @@ column_1_defination,
 column_2_defination,
 ...
 column_m_defination,
-optionnal_key_definition
+optional_key_definition
 );
 ~~~~
 
