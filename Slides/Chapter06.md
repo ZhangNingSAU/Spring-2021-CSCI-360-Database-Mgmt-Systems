@@ -236,9 +236,95 @@ INSERT INTO mytime VALUES
   
   ![6-char1](../Resources/6-char1.png)
 ### Other integer types
+#### BOOLEAN
++ two values: false(zero) and true(non-zero)
++ synonyms: BOOL and BIT
++ equivalent to TINYINT(1) and CHAR(0)
+#### TINYINT[(width)] [UNSIGNED] [ZEROFILL]
++ range: –128 to 127 or  0 to 255 when [UNSIGNED]
+#### SMALLINT[(width)] [UNSIGNED] [ZEROFILL]
++ range: –32,768 to 32,767 or  0 to 65,535 when [UNSIGNED]
+#### MEDIUMINT[(width)] [UNSIGNED] [ZEROFILL]
++ range:  –8,388,608 to 8,388,607 or 0 to 16,777,215 when [UNSIGNED]
+#### BIGINT[(width)] [UNSIGNED] [ZEROFILL]
++ range: –9,223,372,036,854,775,808 to 9,223,372,036,854,775,807 or 0 to 18,446,744,073,709,551,615 when [UNSIGNED]
 ### Other rational number types
++ DOUBLE(REAL) and FLOAT: accurate approximate representations of exact quantities
++ Note: DECIMAL stores the exact values.
+#### FLOAT[(width, decimals)] [UNSIGNED] [ZEROFILL] or FLOAT[(precision)] [UNSIGNED] [ZEROFILL]
+#### DOUBLE[(width, decimals)] [UNSIGNED] [ZEROFILL]
+~~~~
+CREATE TABLE wage (monthly DOUBLE);
+
+INSERT INTO wage VALUES (50000/12);
+
+SELECT monthly*12 FROM wage;
+~~~~
+
 ### Other date and time types
+#### YEAR[(digits)]
++ Stores a two- or four-digit year
++ four digits is the default
+#### DATETIME
++ format: YYYY-MM-DD HH:MM:SS
++ range 1000-01-01 00:00:00 to 9999-12-31 23:59:59
++ If you assign only a date to a DATETIME column, the zero time 00:00:00 is assumed. 
++ If you assign only a time to a DATETIME column, the zero date 0000-00-00 is assumed.
++ This type does not have the automatic update features of TIMESTAMP.
 ### Other string types
+#### VARCHAR(width)
++ stores variable-length strings 
++ maximum value of width is 65,535
+#### BINARY(width) and VARBINARY(width)
+#### BLOB
++ The commonly used type for storing large data.
++ Stores a variable amount of data (such as an image, video, or other nontext file) up to 65,535 bytes in length.
++ The data is treated as binary—that is, no character set is assumed, and comparisons and sorts are case-sensitive.
+#### TEXT
++ A commonly used type for storing large string data objects.
++ It is identical to BLOB, except that the data is treated as belonging to a character set.
+#### TINYBLOB and TINYTEXT
++ Identical to BLOB and TEXT, respectively, except that a maximum of 255 bytes can be stored.
+#### MEDIUMBLOB and MEDIUMTEXT
++ Identical to BLOB and TEXT, respectively, except that a maximum of 16,777,215 bytes can be stored.
+#### LONGBLOB and LONGTEXT
++ Identical to BLOB and TEXT, respectively, except that a maximum of four gigabytes of data can be stored.
+#### ENUM('value1'[,'value2'[, ...]]
++ A list, or enumeration of string values. 
++ A column of type ENUM can be set to a value from the list value1, value2, and so on, up to a maximum of 65,535 different values.
++ what’s stored in the database is an integer representation.
++ The enumerated column can contain NULL (stored as NULL), the empty string '' (stored as 0), or any of the valid elements (stored as 1, 2, 3, and so on)
++ when you try to store anything that’s not in the valid values, an empty string is stored instead.
+
+~~~~
+CREATE TABLE fruits_enum ( fruit_name ENUM('Apple', 'Orange', 'Pear') );
+INSERT INTO fruits_enum VALUES ('Apple');
+INSERT INTO fruits_enum VALUES ('Banana'); 
+-- The previous statament yields a warning, you can use SHOW WARNINGS to display the warning information
+SHOW WARNINGS;
+INSERT INTO fruits_enum VALUES ('Apple,Orange'); -- warning again
+SELECT * FROM fruits_enum;
+~~~~
++ You can also specify a default value other than the empty string:
+~~~~
+CREATE TABLE new_fruits_enum ( fruit_name ENUM('Apple', 'Orange', 'Pear') -> DEFAULT 'Pear');
+INSERT INTO new_fruits_enum VALUES();
+~~~~
+#### SET('value1'[,'value2'[, ...]])
++ A set of string values. 
++ A column of type SET can be set to zero or more values from the list value1, value2, and so on, up to a maximum of 64 different values.
++ While the values are strings, what’s stored in the database is an integer representation.
++ each row can store only one ENUM value in a column, but can store multiple SET values.
+
+~~~~
+CREATE TABLE fruits_set ( fruit_name SET('Apple', 'Orange', 'Pear') );
+INSERT INTO fruits_set VALUES ('Apple');
+INSERT INTO fruits_set VALUES ('Banana');
+-- The previous statament yields a warning, you can use SHOW WARNINGS to display the warning information
+SHOW WARNINGS;
+INSERT INTO fruits_set VALUES ('Apple,Orange'); -- no warnings with multiple values
+SELECT * FROM fruits_set;
+~~~~
 
 ## Keys and Indexes
 ## The AUTO_INCREMENT Feature
