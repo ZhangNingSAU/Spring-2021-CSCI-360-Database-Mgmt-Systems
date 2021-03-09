@@ -34,3 +34,5 @@ https://stambrose.webex.com/recordingservice/sites/stambrose/recording/eda46cfc3
 # Week 6
 ## Tuesday 03/02/2021
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/ccb9b77e55cb40dc9fcee5c53f75e212
+## Thursday 03/04/2021
+Quiz 1
