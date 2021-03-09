@@ -206,7 +206,7 @@ INSERT INTO mytime VALUES
     + If you want the timestamp to be set only when a new row is inserted into the table, add DEFAULT CURRENT_TIMESTAMP to the end of the column declaration.
     + If you don’t want a default timestamp but want the current time to be used whenever the data in a row is updated, add ON UPDATE CURRENT_TIME STAMP to the end of the column declaration.
     + If you want both of the above—that is, you want the timestamp to be set to the current time in each new row or whenever an existing row is modified add **DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP** to the end of the column declaration.
-    + DEFAULT NULLishandledasDEFAULT CURRENT_TIMESTAMPforthefirsttimestampcol- umn, but as DEFAULT 0 for any subsequent ones.
+    + DEFAULT NULL is handled a sDEFAULT CURRENT_TIMESTAMP for the first timestamp column, but as DEFAULT 0 for any subsequent ones.
   - Example:
   ~~~~
   CREATE TABLE mytime(id INT NOT NULL,
