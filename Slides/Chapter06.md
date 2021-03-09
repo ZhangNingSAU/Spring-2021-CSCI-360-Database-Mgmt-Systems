@@ -327,9 +327,141 @@ SELECT * FROM fruits_set;
 ~~~~
 
 ## Keys and Indexes
-## The AUTO_INCREMENT Feature
-## The Sample Music Database
+### Primary key
++ A primary key uniquely identifies each row in a table.
+### Index
++ When you declare one to MySQL, it creates a new file on disk that stores information about where the data from each row in the table is stored. 
++ This information is called an index, and its purpose is to speed up searches that use the primary key. 
++ Without the index, the only way to find rows in the table is to read each one from disk and check whether it matches the artist_id you’re searching for.
++ You can display the indexes available on a table using the SHOW INDEX command.
+  - The cardinality is the number of unique values in the index.
+  - All columns that are part of a primary key must be declared as NOT NULL.
+ 
+![showindex](../Resources/ch6-showindex.png)
+  
 
++ You can create other indexes on the data in a table. You do this so that other searches —on other columns or combinations of columns—are extremely fast and in order to avoid sequential scans.
+
+~~~~
+-- DROP statement may fail due to the foreign key constraint, you can replace the CREATE statement in music.sql then run it in batch mode.
+DROP TABLE artist;
+
+CREATE TABLE artist (
+  artist_id SMALLINT(5) NOT NULL DEFAULT 0,
+  artist_name CHAR(128) DEFAULT NULL,
+  PRIMARY KEY (artist_id),
+  KEY artist_name (artist_name)
+  );
+~~~~
+
+~~~~
+CREATE TABLE customer (
+  cust_id INT(4) NOT NULL DEFAULT 0,
+  firstname CHAR(50),
+  secondname CHAR(50),
+  surname CHAR(50),
+  PRIMARY KEY (cust_id),
+  KEY names (firstname, secondname, surname)
+  );
+~~~~
+
++ You can use the EXPLAIN statement to check the fast searching by combinations of the three name columns.
+
+![explain](../Resources/ch6-explain.png)
+
++ For MySQL to be able to use an index, the query needs to meet both the following conditions:
+  - The leftmost column listed in the KEY (or PRIMARY KEY) clause must be in the query.
+  - The query must contain no OR clauses for columns that aren’t indexed.
++ When you’re considering adding an index, think about the following:
+  - Indexes cost space on disk, and they need to be updated whenever data changes.
+  - Only add an index that’ll be used frequently.
+  - If all columns in an index are used in all queries, list the column with the highest number of duplicates at the left of the KEY clause.
+  - The smaller the index, the faster it’ll be. 
+  - For long columns, you can use only a prefix of the values from a column to create the index
+    + The following example means that only the first three characters of firstname are indexed, then the first two characters of secondname, and then 10 characters from surname. 
+  ~~~~
+  KEY names (firstname(3), secondname(2), surname(10))
+  ~~~~
+## The AUTO_INCREMENT Feature
++ The AUTO_INCREMENT feature has the following requirements:
+  - The column it is used on must be indexed.
+  - The column that is it used on cannot have a DEFAULT value.
+  - There can be only one AUTO_INCREMENT column per table.
+~~~~
+DROP TABLE artist;
+
+CREATE TABLE artist (
+  artist_id SMALLINT(5) NOT NULL AUTO_INCREMENT,
+  artist_name CHAR(128) DEFAULT NULL,
+  PRIMARY KEY (artist_id)
+  );
+  
+INSERT INTO artist VALUES (NULL, "The Shamen");
+INSERT INTO artist VALUES (NULL, "Probot");
+INSERT INTO artist VALUES (NULL, "The Cult");
+
+SELECT * FROM artist;
+~~~~
+
++  When you’re using the default MyISAM table type, you can use the AUTO_INCREMENT feature on keys that comprise multiple columns. 
+  - The following statement i invalid on XAMPP plotform, because the table taye is innoDB by default, we'll learn different table types in [Chapter 7](../Slides/Chapter07.md).
+~~~~
+CREATE TABLE album1 (
+  artist_id INT(5) NOT NULL,
+  album_id INT(4) NOT NULL AUTO_INCREMENT,
+  album_name CHAR(128) DEFAULT NULL,
+  PRIMARY KEY (artist_id, album_id)
+  );
+~~~~
+## The Sample Music Database
++ The music.sql file is structured as follows:
+  - Drop the database if it exists, and then create it.
+  - Use the database.
+  - Create the tables.
+  - Insert the data.
+### Drop the database if it exists, and then create it.
+~~~
+DROP DATABASE IF EXISTS music;
+CREATE DATABASE music;
+~~~
+### Use the database
+~~~~
+USE music;
+~~~~
+### Create the tables
+~~~~
+CREATE TABLE artist (
+  artist_id SMALLINT(5) NOT NULL DEFAULT 0,
+  artist_name CHAR(128) DEFAULT NULL, 
+  PRIMARY KEY (artist_id)
+  );
+
+CREATE TABLE album (
+  artist_id SMALLINT(5) NOT NULL DEFAULT 0, 
+  album_id SMALLINT(4) NOT NULL DEFAULT 0, 
+  album_name CHAR(128) DEFAULT NULL, 
+  PRIMARY KEY (artist_id,album_id)
+  );
+
+CREATE TABLE track (
+  track_id SMALLINT(3) NOT NULL DEFAULT 0, 
+  track_name CHAR(128) DEFAULT NULL, 
+  artist_id SMALLINT(5) NOT NULL DEFAULT 0, 
+  album_id SMALLINT(4) NOT NULL DEFAULT 0, 
+  time TIME DEFAULT NULL,
+  PRIMARY KEY (artist_id,album_id,track_id) 
+  );
+
+CREATE TABLE played (
+  artist_id SMALLINT(5) NOT NULL DEFAULT 0,
+  album_id SMALLINT(4) NOT NULL DEFAULT 0,
+  track_id SMALLINT(3) NOT NULL DEFAULT 0,
+  played TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP, 
+  PRIMARY KEY (artist_id,album_id,track_id,played)
+  );
+~~~~
++ Note:
+  - in table played, the played column makes use of the TIMESTAMP type and its automatic-update feature: we want the value to be set to the current date and time whenever a row is inserted. To use the feature, when- ever we play a track, we create a new row with the artist\_id, album_id, and track\_id, and set the played column to NULL.
 # Altering Structures
 ## Adding, Removing, and Changing Columns
 ## Adding, Removing, and Changing Indexes
