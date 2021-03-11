@@ -344,6 +344,7 @@ SELECT * FROM fruits_set;
 
 ~~~~
 -- DROP statement may fail due to the foreign key constraint, you can replace the CREATE statement in music.sql then run it in batch mode.
+-- Or use the music.sql with no foreign key constraint to create the database.(There are two music.sql files on the website of the textbook)
 DROP TABLE artist;
 
 CREATE TABLE artist (
