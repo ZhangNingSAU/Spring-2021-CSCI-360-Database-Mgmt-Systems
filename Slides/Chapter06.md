@@ -332,7 +332,7 @@ SELECT * FROM fruits_set;
 ### Index
 + When you declare one to MySQL, it creates a new file on disk that stores information about where the data from each row in the table is stored. 
 + This information is called an index, and its purpose is to speed up searches that use the primary key. 
-+ Without the index, the only way to find rows in the table is to read each one from disk and check whether it matches the artist_id you’re searching for.
++ Without the index, the only way to find rows in the table is to read each one from disk and check whether it matches the artist_id(primary key) you’re searching for.
 + You can display the indexes available on a table using the SHOW INDEX command.
   - The cardinality is the number of unique values in the index.
   - All columns that are part of a primary key must be declared as NOT NULL.
@@ -461,12 +461,168 @@ CREATE TABLE played (
   );
 ~~~~
 + Note:
-  - in table played, the played column makes use of the TIMESTAMP type and its automatic-update feature: we want the value to be set to the current date and time whenever a row is inserted. To use the feature, when- ever we play a track, we create a new row with the artist\_id, album_id, and track\_id, and set the played column to NULL.
+  - in table played, the played column makes use of the TIMESTAMP type and its automatic-update feature: we want the value to be set to the current date and time whenever a row is inserted. To use the feature, whenever we play a track, we create a new row with the artist\_id, album_id, and track\_id, and set the played column to NULL.
 # Altering Structures
 ## Adding, Removing, and Changing Columns
+### Rename a column
++ Syntax
+~~~~
+ALTER TABLE table_name CHANGE original_column_name new_column_definition;
+~~~~
++ Example
+~~~~
+ALTER TABLE played CHANGE played last_played TIMESTAMP;
+~~~~
+### modify the type and clauses of a column, but not its name
++ Syntax 1
+~~~~
+ALTER TABLE table_name MODIFY new_column_definition_with_original_column_name;
+~~~~
++ Example
+~~~~
+ALTER TABLE artist MODIFY artist_name CHAR(64) DEFAULT "Unknown";
+~~~~
++ Syntax 2
+~~~~
+ALTER TABLE artist CHANGE original_column_name new_column_definition_with_original_column_name;
+~~~~
++ Example
+~~~~
+ALTER TABLE artist CHANGE artist_name artist_name CHAR(64) DEFAULT "Unknown";
+~~~~
++ Note
+  - 1. Don’t use incompatible types(e.g. INT -> DATE)
+  - 2. Don’t truncate the data unless that’s what you want. 
+### add an extra column 
++ Syntax
+~~~~
+ALTER TABLE table_name ADD column_definition;
+~~~~
++ Example
+~~~~
+ALTER TABLE artist ADD formed YEAR;
+~~~~
++ If you want it to instead be the first column, use the FIRST keyword as follows:
+~~~~
+ALTER TABLE artist ADD formed YEAR FIRST;
+~~~~
++ If you want it added in a specific position, use the AFTER keyword:
+~~~~
+ALTER TABLE artist ADD formed YEAR AFTER artist_id;
+~~~~
+### remove a column,
++ Syntax
+  - This removes both the column structure and any data contained in that column.
+  - It also removes the column from any index it was in; if it’s the only column in the index, the index is dropped, too. 
+  - You can’t remove a column if it’s the only one in a table; to do this, you drop the table instead.
+~~~~
+ALTER TABLE table_name DROP column_name;
+~~~~
++ Example
+~~~~
+ALTER TABLE artist DROP formed;
+~~~~
+### specify multiple alterations in a single ALTER TABLE statement
++ Syntax
+~~~~
+ALTER TABLE table_name alteration1, alteration2, ... ;
+~~~~
++ Example
+~~~
+ALTER TABLE artist ADD formed YEAR, MODIFY artist_name char(256);
+~~~
 ## Adding, Removing, and Changing Indexes
-## Renaming Tables and Altering Other Structures
++ Modifying indexes does not affect the data stored in the table.
+### add a new index
++ Syntax
+~~~
+ALTER TABLE table_name ADD INDEX index_name (column_name(s));
+~~~
++ Example
+~~~
+ALTER TABLE artist ADD INDEX by_name (artist_name);
+~~~
+### Specify a primary key (for a table after it’s created)
++ Syntax
+~~~~
+ALTER TABLE table_name ADD PRIMARY KEY (column_name(s));
+~~~~
++ Example
+~~~~
+ALTER TABLE artist ADD PRIMARY KEY (artist_id);
+~~~~
+### remove an index
++ Syntax
+~~~~
+ALTER TABLE table_name DROP INDEX index_name;
+~~~~
++ Example
+~~~
+ALTER TABLE artist DROP INDEX by_name;
+~~~
+### drop a primary key
++ Syntax
+~~~~
+ALTER TABLE table_name DROP PRIMARY KEY;
+~~~~
++ Example
+~~~~
+ALTER TABLE artist DROP PRIMARY KEY;
+~~~~
 
+### change a primary key
++ MySQL won’t allow you to have multiple primary keys in a table. If you want to change the primary key, you’ll have to remove the existing index before adding the new one.
+~~~~
+CREATE TABLE staff (staff_id INT, name CHAR(40));
+ALTER TABLE staff ADD PRIMARY KEY (staff_id);
+-- the following statement tries to add another primary key, which is invalid
+ALTER TABLE staff ADD PRIMARY KEY (name); 
+
+ALTER TABLE staff DROP PRIMARY KEY;
+ALTER TABLE staff ADD PRIMARY KEY (name);
+~~~~
+### change an index
+You can’t modify an index once it’s been created. If you want to change an index, you'll have to drop the index and then create it again with the new specification.
+~~~~
+ALTER TABLE artist DROP INDEX by_name;
+
+-- by_name index includes only the first 10 characters of the artist_name
+ALTER TABLE artist ADD INDEX by_name (artist_name(10));
+~~~~
+
+## Renaming Tables and Altering Other Structures
+### Rename a table
++ Syntax(**TO** keyword is optional)
+~~~~
+ALTER TABLE table_name RENAME TO new_table_name;
+~~~~
++ Example
+~~~~
+ALTER TABLE played RENAME TO playlist;
+~~~~
++ There are several other things you can do with ALTER statements(See [ALTER TABLE Statement Documentation](https://dev.mysql.com/doc/refman/5.7/en/alter-table.html) ):
+  - Change the default character set and collation order for a database, a table, or a column.
+  - Change the order of the rows in a table. This is useful only if you know you want to access the rows in a particular order and you want to help get the data into or near that order.
+  - Manage and change constraints. For example, you can add and remove foreign keys.
+### Rename a database
++ Syntax
+~~~~
+RENAME DATABASE old_database_name new_database_name;
+~~~~
 # Deleting Structures
 ## Dropping Databases
++ Syntax
+~~~~
+DROP DATABASE database_name;
+
+DROP DATABASE IF EXISTS database_name;
+~~~~
 ## Removing Tables
++ Syntax
+~~~~
+DROP TABLE table_name;
+
+DROP TABLE IF EXISTS table_name;
+
+DROP TABLE IF EXISTS table_name1, table_name2,...;
+~~~~
