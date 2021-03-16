@@ -69,5 +69,5 @@
   - Rename shipment as ships.
 + ClearDB.sql: set of SQL statements to drop the above three relations. (10 points)
  
- 
-# Step 2: Submit your work on [Blackboard](https://blackboard.sau.edu/webapps/login/)
+# Step 2: Zip the four files, name it as CSCI360_Homework2_JohnDoe(0123456).
+# Step 3: Submit your work on [Blackboard](https://blackboard.sau.edu/webapps/login/)
