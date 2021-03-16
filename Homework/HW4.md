@@ -14,6 +14,8 @@
   - The combination of Pname and Color must be unique.
   - Qty has a default value of 100.
   - Price must be positive.(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint)
++ Bonus: Foreign Key(5 points)
+  - Note that there exist foreign key relationship in this database, you do not need to define the foreign key relationships in your code. If you do it, you can get 5 points as the bonus.
 + A Sample of Database State
 
 ## supplier
