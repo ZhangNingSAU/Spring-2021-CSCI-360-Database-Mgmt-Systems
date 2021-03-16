@@ -10,7 +10,8 @@ FROM mytable
     GROUP BY column
     HAVING constraint_expression
     ORDER BY column ASC/DESC
-    LIMIT count OFFSET COUNT;
+    LIMIT count 
+    OFFSET COUNT;
 ~~~~
 + Query order of execution
 
