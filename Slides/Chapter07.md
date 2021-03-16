@@ -15,16 +15,7 @@ FROM mytable
 ~~~~
 + Query order of execution
 
-|Order|Clause|
-|---|---|
-|1|FROM and JOIN|
-|2|WHERE|
-|3|ORDER BY|
-|4|GROUP BY|
-|5|HAVING|
-|6|SELECT|
-|7|DISTINCT|
-|8|LIMIT|
+
 
 # Aliases
 + Aliases are nicknames for columns, tables, or function name, allowing you to:
