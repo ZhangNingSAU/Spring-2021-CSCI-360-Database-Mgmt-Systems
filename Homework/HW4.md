@@ -6,14 +6,14 @@
 + **supplier**: Table supplier denotes suppliers. Each supplier has one supplier number (Sno), which is unique to that supplier (and so Sno is the primary key), one name (Sname), not necessarily unique; one rating or status value (Status); and one location (City).
 + **part**: Table part denotes parts. Each kind of part has one part number (Pno), which is unique (So Pno is the primary key); one name (Pname); one color (Color); one weight (Weight); and one location where parts of that kind are stored (City).
 + **shipment**: Table shipment denotes shipments (it shows which parts are supplied by which suppliers). Each shipment has one supplier number (Sno), one part number (Pno), and one quantity (Qty), and one price (Price). For the sake of the example, (Sno, Pno) is the primary key; also Sno and Pno are both foreign keys, matching the primary keys of Suppliers and Parts, respectively). Note that the database shown below includes one supplier, supplier S5, with no shipments at all.
-+ The database has the following constraints:
++ The database has the following constraints(We did not learn the `CHECK` and `UNIQUE` constraits, see documentation [here](https://www.w3resource.com/mysql/creating-table-advance/constraint.php)):
   - Sname cannot be NULL.
-  - Status must be positive(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint).
+  - Status must be positive(he `CHECK` constraint).
   - Pname cannot be NULL
-  - Weight must be between 1 and 100 inclusive (we did not talk about this constraint in class, you can do some research on the `CHECK` constraint).
-  - The combination of Pname and Color must be unique.
+  - Weight must be between 1 and 100 inclusive (the `CHECK` constraint).
+  - The combination of Pname and Color must be unique.(the `UNIQUE`c onstraint)
   - Qty has a default value of 100.
-  - Price must be positive.(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint)
+  - Price must be positive.(the `CHECK` constraint)
 + Bonus: Foreign Key(5 points)
   - Note that there exist foreign key relationship in this database, you do not need to define the foreign key relationships in your code. If you do it, you can get 5 points as the bonus.
 + A Sample of Database State
