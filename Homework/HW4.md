@@ -3,9 +3,9 @@
 # due: 11:59pm 03/23/2021
 
 # Database Description: This homework is based on the well-known suppliers-and-parts database which contains three relations and the following data:
-+ **supplier**: Entity supplier denotes suppliers. Each supplier has one supplier number (Sno), which is unique to that supplier (and so Sno is the primary key), one name (Sname), not necessarily unique; one rating or status value (Status); and one location (City).
-+ **part**: Entity part denotes parts. Each kind of part has one part number (Pno), which is unique (So Pno is the primary key); one name (Pname); one color (Color); one weight (Weight); and one location where parts of that kind are stored (City).
-+ **shipment**: Relationship shipment denotes shipments (it shows which parts are supplied by which suppliers). Each shipment has one supplier number (Sno), one part number (Pno), and one quantity (Qty), and one price (Price). For the sake of the example, (Sno, Pno) is the primary key; also Sno and Pno are both foreign keys, matching the primary keys of Suppliers and Parts, respectively). Note that the database shown below includes one supplier, supplier S5, with no shipments at all.
++ **supplier**: Table supplier denotes suppliers. Each supplier has one supplier number (Sno), which is unique to that supplier (and so Sno is the primary key), one name (Sname), not necessarily unique; one rating or status value (Status); and one location (City).
++ **part**: Table part denotes parts. Each kind of part has one part number (Pno), which is unique (So Pno is the primary key); one name (Pname); one color (Color); one weight (Weight); and one location where parts of that kind are stored (City).
++ **shipment**: Table shipment denotes shipments (it shows which parts are supplied by which suppliers). Each shipment has one supplier number (Sno), one part number (Pno), and one quantity (Qty), and one price (Price). For the sake of the example, (Sno, Pno) is the primary key; also Sno and Pno are both foreign keys, matching the primary keys of Suppliers and Parts, respectively). Note that the database shown below includes one supplier, supplier S5, with no shipments at all.
 + The database has the following constraints:
   - Sname cannot be NULL.
   - Status must be positive(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint).
@@ -67,7 +67,7 @@
   - Add a new column into shipment to store the date and time information.
   - Set the combination of Sno and Pno in shipment as an index.
   - Rename shipment as ships.
-+ ClearDB.sql: set of SQL statements to drop the above three relations. (10 points)
++ ClearDB.sql: set of SQL statements to drop the above three Table. (10 points)
  
 # Step 2: Zip the four files, name it as CSCI360_Homework2_JohnDoe(0123456).
 # Step 3: Submit your work on [Blackboard](https://blackboard.sau.edu/webapps/login/)
