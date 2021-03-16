@@ -5,15 +5,15 @@
 # Database Description: This homework is based on the well-known suppliers-and-parts database which contains three relations and the following data:
 + **supplier**: Entity supplier denotes suppliers. Each supplier has one supplier number (Sno), which is unique to that supplier (and so Sno is the primary key), one name (Sname), not necessarily unique; one rating or status value (Status); and one location (City).
 + **part**: Entity part denotes parts. Each kind of part has one part number (Pno), which is unique (So Pno is the primary key); one name (Pname); one color (Color); one weight (Weight); and one location where parts of that kind are stored (City).
-+ **shipment**: Relationship shipment denotes shipments (it shows which parts are supplied by which suppliers). Each shipment has one supplier number (Sno), one part number (Pno), and one quantity (Qty), and one price (Price). For the sake of the example, (Sno, Pno) is the parimary key; also Sno and Pno are both foreign keys, matching the primary keys of Suppliers and Parts, respectively). Note that the database shown below includes one supplier, supplier S5, with no shipments at all.
++ **shipment**: Relationship shipment denotes shipments (it shows which parts are supplied by which suppliers). Each shipment has one supplier number (Sno), one part number (Pno), and one quantity (Qty), and one price (Price). For the sake of the example, (Sno, Pno) is the primary key; also Sno and Pno are both foreign keys, matching the primary keys of Suppliers and Parts, respectively). Note that the database shown below includes one supplier, supplier S5, with no shipments at all.
 + The database has the following constraints:
-  - Sname cannot be NULL
-  - Status must be positive
+  - Sname cannot be NULL.
+  - Status must be positive(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint).
   - Pname cannot be NULL
-  - Weight must be between 1 and 100 inclusive
-  - The combination of Pname and Color must be unique
+  - Weight must be between 1 and 100 inclusive (we did not talk about this constraint in class, you can do some research on the `CHECK` constraint).
+  - The combination of Pname and Color must be unique.
   - Qty has a default value of 100.
-  - Price must be positive
+  - Price must be positive.(we did not talk about this constraint in class, you can do some research on the `CHECK` constraint)
 + A Sample of Database State
 
 ## supplier
@@ -58,10 +58,16 @@
 |s4|p5|400|0.003|
 
 
-# Step 1: Create three files:
-+ ClearDB.sql: set of SQL statements to drop the above three relations. (15 points)
-+ CreateDB.sql: set of SQL statements to create the above three relations. (75 points)
-+ LoadDB.sql: set of SQL statements to load the above database state to the database (15 points)
-
-
+# Step 1: Create the follwong four files in order:
++ CreateDB.sql: set of SQL statements to create the above three relations. (65 points)
++ LoadDB.sql: set of SQL statements to load the above database state to the database (10 points)
++ AlterDB.sql: set of SQL statements to alter the database structure.(15 points)
+  - Rename City in supplier as SCity, and City in part as PCity
+  - Change the default value of Qty to 200.
+  - Add a new column into shipment to store the date and time information.
+  - Set the combination of Sno and Pno in shipment as an index.
+  - Rename shipment as ships.
++ ClearDB.sql: set of SQL statements to drop the above three relations. (10 points)
+ 
+ 
 # Step 2: Submit your work on [Blackboard](https://blackboard.sau.edu/webapps/login/)
