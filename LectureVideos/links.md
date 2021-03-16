@@ -42,3 +42,7 @@ Quiz 1
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/59ee10a344164e2aba2737f903525e04/playback
 ## Thursday 03/11/2021
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/33f7fade682c4f72bac5b2b525a80af1
+
+# Week 8
+## Tuesday 03/16/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/c9a187ac88fc49fca381a7eed93cacce
