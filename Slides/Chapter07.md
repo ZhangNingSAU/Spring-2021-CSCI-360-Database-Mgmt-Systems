@@ -160,7 +160,7 @@ SELECT * FROM track GROUP BY artist_id;
 SELECT artist_name, album_name, COUNT(*) FROM
 artist INNER JOIN album USING (artist_id)
 INNER JOIN track USING (artist_id, album_id)
-GROUP BY artist.artist_id, album.album_id;
+GROUP BY artist.artist_id, album.album_id
 HAVING COUNT(*) >= 5;
 ~~~~
 + Example 2: list the albums that have more than 10 tracks, together with the number of tracks they contain. 
@@ -210,7 +210,7 @@ WHERE artist.artist_id = album.artist_id;
 ~~~~
 SELECT artist_name, album_name FROM 
 artist INNER JOIN album
-WHERE artist.artist_id = album.artist_id;
+ON artist.artist_id = album.artist_id;
 ~~~~
 
 ## The Union
