@@ -150,14 +150,287 @@ SELECT * FROM track GROUP BY artist_id;
 + SUM( ): Returns the sum of values from rows in a group
 + other functions: see [MySQL manual under the heading “GROUP BY (Aggregate) Functions.”](http://download.nust.na/pub6/mysql/doc/refman/5.1/en/group-by-functions.html)
 ## The HAVING Clause
++ The HAVING Clause adds additional control to the aggregation of rows in a GROUP BY operation.
++ The HAVING clause must contain an expression or column that’s listed in the SELECT clause.
++ Typically, the expression in the HAVING clause uses an aggregate function such as COUNT( ), SUM( ), MIN( ), or MAX( ).
++ If you find yourself wanting to write a HAVING clause that uses a column or expression that isn’t in the SELECT clause, chances are you should be using a WHERE clause instead.
++ The HAVING clause is only for deciding how to form each group or cluster, not for choosing rows in the output. 
++ Example 1: find out albums if you’ve listened to one or more of its tracks at least five times.
+~~~~
+SELECT artist_name, album_name, COUNT(*) FROM
+artist INNER JOIN album USING (artist_id)
+INNER JOIN track USING (artist_id, album_id)
+GROUP BY artist.artist_id, album.album_id;
+HAVING COUNT(*) >= 5;
+~~~~
++ Example 2: list the albums that have more than 10 tracks, together with the number of tracks they contain. 
+~~~~
+SELECT artist_name, album_name, COUNT(*) FROM
+artist INNER JOIN album USING (artist_id)
+INNER JOIN track USING (artist_id, album_id)
+GROUP BY artist.artist_id, album.album_id
+HAVING COUNT(*) > 10;
+~~~~
++ Example 3: how many tracks are on albums by New Order
+    - the HAVING clause should be used to decide what rows should form each group, NOT used to filter the answers to display.
+    - To filter the answers, the WHERE clause should be used.
+    
+~~~~
+SELECT artist_name, album_name, COUNT(*) FROM
+artist INNER JOIN album USING (artist_id)
+INNER JOIN track USING (artist_id, album_id)
+GROUP BY artist.artist_id, album.album_id
+HAVING artist_name = "New Order";
+~~~~
 
+~~~~
+SELECT artist_name, album_name, COUNT(*) FROM
+artist INNER JOIN album USING (artist_id)
+INNER JOIN track USING (artist_id, album_id)
+WHERE artist_name = "New Order"
+GROUP BY artist.artist_id, album.album_id;
+~~~~
 # Advanced Joins
 ## The Inner Join
-## The Union
-## The Left and Right Joins
-## The Natural Join
++ The INNER JOIN clause matches rows between two tables based on the criteria you provide in the **USING** clause.
 
+~~~~
+SELECT artist_name, album_name FROM
+artist INNER JOIN album USING (artist_id);
+~~~~
++ the **WHERE** clause (no INNER JOIN)
+
+~~~~
+SELECT artist_name, album_name FROM artist, album
+WHERE artist.artist_id = album.artist_id;
+~~~~
+
++ the Inner JOIN clause with the **ON** clause
+
+~~~~
+SELECT artist_name, album_name FROM 
+artist INNER JOIN album
+WHERE artist.artist_id = album.artist_id;
+~~~~
+
+## The Union
++ The UNION allows you to combine the output of more than one SELECT statement to give a consolidated result set.
++ Example 1: create a list of the first artist and the last artist.
+
+~~~~
+(SELECT * FROM artist
+ORDER BY artist_id ASC
+LIMIT 1)
+UNION
+(SELECT * FROM artist
+ORDER BY artist_id DESC
+LIMIT 1);
+~~~~
+
++ The UNION operator has several limitations:
+    - The output is labeled with the names of the columns or expressions from the first query. Use column aliases to change this behavior.
+    ~~~
+    SELECT artist_id FROM artist
+    UNION
+    SELECT artist_name FROM artist;
+    ~~~
+    - The queries should output the same number of columns. If you try using different numbers of columns, MySQL will report an error.
+    - All matching columns should have the same type.
+    - The results returned are unique, as if you’d applied a DISTINCT to the overall result set. If you want to show any duplicates, replace UNION with UNION ALL.
+    ~~~~
+    SELECT artist_id FROM artist
+    UNION
+    SELECT artist_id FROM artist;
+    ~~~~
+    
+    ~~~~
+    SELECT artist_id FROM artist
+    UNION ALL
+    SELECT artist_id FROM artist;
+    ~~~~
+    - If you want to apply LIMIT or ORDER BY to an individual query that is part of a UNION statement, enclose that query in parentheses. It’s useful to use parentheses anyway to keep the query easy to understand.
+    - For efficiency, MySQL will actually ignore an ORDER BY clause within a subquery if it’s used without LIMIT.
+    - The output of a UNION operation isn’t guaranteed to be ordered, even if the subqu- eries are ordered, so if you want the final output to be ordered, you should add an ORDER BY clause at the end of the whole query:
+    ~~~~
+    (SELECT track_name, played
+    FROM track INNER JOIN played USING (artist_id, album_id, track_id)
+    ORDER BY played ASC)
+    UNION ALL
+    (SELECT track_name, played
+    FROM track INNER JOIN played USING (artist_id, album_id, track_id)
+    ORDER BY played DESC LIMIT 5)
+    ORDER BY played;
+    ~~~~
+    
+    ~~~
+    (SELECT artist_name FROM artist WHERE artist_id < 5)
+    UNION
+    (SELECT artist_name FROM artist WHERE artist_id > 7)
+    ORDER BY artist_name LIMIT 4;
+    ~~~
+## The Left and Right Joins
++ What if we need the information discarded by INNER JOIN?
+
++ Example: list the track names that have not been played?
+~~~~
+SELECT track_name, played FROM
+track LEFT JOIN played USING (artist_id, album_id, track_id)
+ORDER BY played DESC;
+~~~~
+### LEFT JOIN
++ A **LEFT JOIN** works like this: each row in the left table—the one that’s doing the driving—is processed and output, with the matching data from the second table if it exists and NULL values if there is no matching data in the second table.
++ The order of the tables in the LEFT JOIN is important.(LEFT JOIN is driven by the LEFT table)
+
+~~~~
+SELECT track_name, played FROM
+played LEFT JOIN track USING (artist_id, album_id, track_id)
+ORDER BY played DESC;
+~~~~
+
++ Example: list all albums, even those that have never been played
+
+~~~
+SELECT artist_name, album_name, COUNT(played) FROM
+artist INNER JOIN album USING (artist_id)
+INNER JOIN track USING (artist_id, album_id)
+LEFT JOIN played USING (artist_id, album_id, track_id)
+GROUP BY album.artist_id, album.album_id;
+~~~
+
+### RIGHT JOIN
++ whatever is on the right drives the process
+
+~~~~
+SELECT track_name, played FROM
+played RIGHT JOIN track USING (artist_id, album_id, track_id)
+ORDER BY played DESC;
+~~~~
+
+## The Natural Join
++ you tell MySQL what tables you want to join, and it figures out how to do it and gives you an INNER JOIN result set. 
++ The following two queries are equivalent.
+~~~
+SELECT artist_name, album_name FROM artist NATURAL JOIN album;
+~~~
+
+~~~
+SELECT artist_name, album_name FROM
+artist INNER JOIN album USING (artist_id);
+~~~
++ If identifier columns don’t share the same name, natural joins won’t work.
 # Nested Queries
+## Nested Query Basics: 
++ The outer query uses the output of the inner query.
+~~~~
+SELECT artist_name FROM artist WHERE artist_id =
+(SELECT artist_id FROM album WHERE album_name = "In A Silent Way");
+~~~~
++ Inner Query: (SELECT artist_id FROM album WHERE album_name = "In A Silent Way")
++ Outer Query: SELECT artist_name FROM artist WHERE artist_id = 
++ The nested query is equivalent to a non-nested query
+~~~~
+SELECT artist_name FROM
+artist INNER JOIN album USING (artist_id)
+WHERE album_name = "In A Silent Way";
+~~~~
++ Nested queries are hard to optimize, and so they’re almost always slower to run than the unnested alternative, but sometimes it’s your only choice.
++ Example: List which track you listened to most recently.
+~~~~
+SELECT track_name FROM track INNER JOIN played
+USING (artist_id, album_id, track_id)
+WHERE played = (SELECT MAX(played) FROM played);
+~~~~
+## The ANY, SOME, ALL, IN, and NOT IN Clauses
++ Add the following statements in music.sql and run it in batch mode.
+~~~~
+CREATE TABLE producer (
+producer_id SMALLINT(4) NOT NULL DEFAULT 0, 
+producer_name CHAR(128) DEFAULT NULL,
+years SMALLINT(3) DEFAULT 0,
+PRIMARY KEY (producer_id));
+
+INSERT INTO producer VALUES
+(1, "Phil Spector", 36),
+(2, "George Martin", 40),
+(3, "Tina Weymouth", 20), 
+(4, "Chris Frantz", 20),
+(5, "Ed Kuepper", 15);
+
+CREATE TABLE engineer (
+engineer_id SMALLINT(4) NOT NULL DEFAULT 0, 
+engineer_name CHAR(128) DEFAULT NULL,
+years SMALLINT(3) DEFAULT 0,
+PRIMARY KEY (engineer_id));
+
+INSERT INTO engineer VALUES
+(1, "George Martin", 40), 
+(2, "Eddie Kramer", 38),
+(3, "Jeff Jarratt", 40),
+(4, "Ed Stasium", 25);
+~~~~
+### ANY and IN
++ ANY instance of the inner query results
++ Example: find engineers who’ve been working longer than the least experienced producer. 
+
+~~~
+SELECT engineer_name, years
+FROM engineer WHERE years > ANY 
+(SELECT years FROM producer);
+~~~
+
+~~~
+SELECT engineer_name, years
+FROM engineer WHERE years > 
+(SELECT MIN(years) FROM producer);
+~~~
++ Example: list the producers who are also engineers.
+
+~~~~
+SELECT producer_name FROM producer WHERE 
+producer_name = ANY
+(SELECT engineer_name FROM engineer);
+~~~~
+~~~~
+SELECT producer_name FROM producer WHERE producer_name 
+IN (SELECT engineer_name FROM engineer);
+~~~~
+
+~~~~
+SELECT producer_name FROM producer INNER JOIN engineer
+ON (producer_name = engineer_name);
+~~~~
+### ALL
++ ALL instance of the inner query results
++ Example: find engineers who are more experienced than all of the producers.
+~~~
+SELECT engineer_name, years
+FROM engineer WHERE years > ALL 
+(SELECT years FROM producer);
+~~~
+### NOT IN, <> ANY, or != ANY
+
+~~~
+SELECT engineer_name FROM engineer WHERE 
+engineer_name NOT IN
+(SELECT producer_name FROM producer);
+~~~
+
+## Writing row subqueries
++ the inner query returns multiple columns from multiple rows.
++ The row subquery syntax allows you to compare multiple values per row.
++ Example: engineers that have been a producer for the same length of time.
+    - solution 1: inner join
+    ~~~~
+    SELECT producer_name, producer.years FROM
+    producer, engineer WHERE producer_name = engineer_name AND 
+    producer.years = engineer.years;
+    ~~~~
+    - solution 2: subquery
+    ~~~
+    SELECT producer_name, years FROM producer WHERE 
+    (producer_name, years) IN
+    (SELECT engineer_name, years FROM engineer);
+    ~~~
 ## User Variables
 ## Transactions and Locking
 
