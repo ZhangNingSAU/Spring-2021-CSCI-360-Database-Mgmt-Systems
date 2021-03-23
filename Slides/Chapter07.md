@@ -415,7 +415,7 @@ engineer_name NOT IN
 (SELECT producer_name FROM producer);
 ~~~
 
-## Writing row subqueries
+### Writing row subqueries
 + the inner query returns multiple columns from multiple rows.
 + The row subquery syntax allows you to compare multiple values per row.
 + Example: engineers that have been a producer for the same length of time.
@@ -431,12 +431,137 @@ engineer_name NOT IN
     (producer_name, years) IN
     (SELECT engineer_name, years FROM engineer);
     ~~~
-## User Variables
-## Transactions and Locking
+## The EXISTS and NOT EXISTS Clauses
 
+
+
+### EXISTS and NOT EXISTS basics
++ Syntax: the WHERE condtion is TRUE if the inner query returns at least one row.
+~~~~
+OUTER QUERY WHERE EXISTS
+(INNER QUERY)
+~~~~
++ Example
+~~~~
+SELECT * FROM artist WHERE EXISTS
+(SELECT * FROM played);
+
+SELECT album_name FROM album WHERE EXISTS
+(SELECT * FROM artist WHERE artist_name = "John Coltrane");
+
+SELECT * FROM producer WHERE NOT EXISTS
+(SELECT * FROM artist WHERE artist_name = "New Order");
+~~~~
+### Correlated subqueries
++ Tables listed in the outer query are allowed to be accessed in the subquery(You can use values from the outer query in the inner query to evaluate complex information needs.).
++ Example: list all artists who’ve produced a self-titled album. 
+
+~~~~
+INSERT INTO artist VALUES (7, "The Beatles");
+INSERT INTO album VALUES (7, 1, "The Beatles");
+
+SELECT artist_name FROM artist WHERE EXISTS
+(SELECT * FROM album WHERE album_name = artist_name);
+~~~~
++  example using EXISTS: find all artists from whom we own at least two albums.
+~~~~~
+SELECT artist_name FROM artist WHERE EXISTS
+(SELECT * FROM album WHERE artist.artist_id = album.artist_id
+GROUP BY artist.artist_id HAVING COUNT(*) >= 2);
+~~~~~
+## Nested Queries in the FROM Clause
++ Example
+~~~
+SELECT producer_name, months FROM
+(SELECT producer_name, years*12 AS months FROM producer) AS prod;
+~~~
++ Note: this “derived table” in the FROM clause must have an alias, the following query will have some error.
+~~~
+SELECT producer_name, months FROM
+(SELECT producer_name, years*12 AS months FROM producer);
+~~~
++ Example
+~~~
+SELECT AVG(albums) FROM
+(SELECT COUNT(*) AS albums FROM artist INNER JOIN album
+USING (artist_id) GROUP BY artist.artist_id) AS alb;
+~~~
+# User Variables
++ A variable allows you to store a result and use it later.
++ Syntax
+~~~
+@variable_name := result
+~~~
++ Example
+~~~
+SELECT @artist:=artist_name FROM artist WHERE artist_id = 1;
+~~~
++ Use a variable
+~~~
+SELECT @artist;
+~~~
++ Set a variable
+~~~~
+SET @counter := 0;
+
+SET @counter := 0, @age:=23;
+~~~~
+
++ Example
+~~~~
+SELECT @recent := MAX(played) FROM played;
+
+SELECT track_name FROM track INNER JOIN played
+USING (artist_id, album_id, track_id)
+WHERE played = @recent;
+~~~~
++ Guidelines on using user variable
+    - User variables are unique to a connection: variables that you create can’t be seen by anyone else, and two different connections can have two different variables with the same name.
+    - The variable names can be alphanumeric strings and can also include the period (`.`), underscore (`_`), and dollar (`$`) characters.
+    - Variable names are case-sensitive in MySQL versions earlier than version 5, and case-insensitive from version 5 onward.
+    - Any variable that isn’t initialized has the value NULL; you can also manually set a variable to be NULL.
+    - Variables are destroyed when a connection closes.
+    - You should avoid trying to both assign a value to a variable and use the variable as part of a SELECT query. Two reasons for this are that the new value may not be available for use immediately in the same statement, and a variable’s type is set when it’s first assigned in a query; trying to use it later as a different type in the same SQL statement can lead to unexpected results.
+    ~~~~
+    SELECT @aid, @aid:=artist.artist_id, @aid FROM artist,album
+    WHERE album.artist_id=@aid;
+    ~~~~
+# Transactions and Locking
+## Locking
++ When a database is concurrently accessed by several users, you have to consider how you may be affected if other users change the data that you’re accessing, and how changes you make may affect other users.
++ `Locks` can be applied to prevent concurrent users from interacting destructively with one other’s data.
+    - A `read lock` allows you to prevent other users from changing data while you’re reading and processing the data.
+    - A `write lock` tells other users that the data is being changed and that they should not read or modify it.
+## Transcation
++ In some cases, you want all or none of a series of operations to succeed.
++ `Transactions` allow you to batch together SQL statements as an indivisible set that either succeeds or has no effect on the database. 
 # Table Types
++ MyISAM, InnoDB...
++ only the InnoDB table type supports foreign-key constraints.
++ You can use the `SHOW TABLE STATUS` command to display technical information about how your tables are stored.
++ The `SHOW ENGINES` command displays a list of all table types and indicates whether they’re available for use on your MySQL installation.
+## Create or Alter table types
+~~~~
+CREATE TABLE mytable (field INT(2)) type=MyISAM;
+
+ALTER TABLE artist type = InnoDB;
+~~~~
 ## MyISAM
++ It’s an all-around performer that’s designed for typical applications; it supports very fast querying and has very low overhead for changes to data. It’s also very flexible.
 ## Memory or Heap
++ Two terms(memory and heap) are interchangeable.
++ The Memory table type is useful when you want to force data to be in main memory and not on disk.
 ## InnoDB
++ The InnoDB type is the heavyweight, reliable, high-performance choice for large-scale, highly reliable applications.
 ### Transaction examples
++ Transactions are the key feature that make InnoDB different from MyISAM.
++ Example: no need to use the first two ALTER commands because we are using XAMPP in this class and the default table type is InnoDB.
+~~~
+ALTER TABLE artist type = InnoDB;
+ALTER TABLE album type = InnoDB;
+START TRANSACTION;
+INSERT INTO artist VALUES (8, "The Cure");
+INSERT INTO album VALUES (8, 1, "Disintegration");
+COMMIT;
+~~~
 ## BDB
