@@ -553,6 +553,17 @@ ALTER TABLE artist type = InnoDB;
 + The Memory table type is useful when you want to force data to be in main memory and not on disk.
 ## InnoDB
 + The InnoDB type is the heavyweight, reliable, high-performance choice for large-scale, highly reliable applications.
++ Features:
+    - Support for transactions
+    - Advanced crash recovery features
+    - Row-level locking
+    - Foreign-key support
+    - Fast, flexible indexing
++ Limitations:
+    - More features means more to understand
+    - It’s difficult to set up
+    - It’s disk-hungry
+    - Locking overheads
 ### Transaction examples
 + Transactions are the key feature that make InnoDB different from MyISAM.
 + Example: no need to use the first two ALTER commands because we are using XAMPP in this class and the default table type is InnoDB.
@@ -565,3 +576,13 @@ INSERT INTO album VALUES (8, 1, "Disintegration");
 COMMIT;
 ~~~
 ## BDB
++ The Berkeley Database (BDB) table type can survive the same types of database crashes as the InnoDB table type, and also has the COMMIT and ROLLBACK functionality we showed you in the previous section.
++ Features:
+    - Transaction support
+    - Advanced crash-recovery features
+    - Page-level locking
+    - Fast primary-key indexing
++ Limitations:
+    - Gamma-quality interface and limited support
+    - It’s disk-hungry, like InnoDB
+    - It’s difficult to set up
