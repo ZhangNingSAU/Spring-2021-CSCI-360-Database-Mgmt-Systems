@@ -3,7 +3,7 @@
 # due: 11:59pm 04/01/2021
 
 # Database Description: This homework is based on the suppliers-and-parts database you created in [HW4](../Homework/HW4.md).
-
++ Note: Please run CreateDB.sql and LoadDB.sql to create the database and insert rows. Do NOT run AlterDB.sql.
 
 
 
