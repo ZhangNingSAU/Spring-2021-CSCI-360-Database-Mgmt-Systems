@@ -341,7 +341,7 @@ USING (artist_id, album_id, track_id)
 WHERE played = (SELECT MAX(played) FROM played);
 ~~~~
 ## The ANY, SOME, ALL, IN, and NOT IN Clauses
-+ Add the following statements in music.sql and run it in batch mode.
++ Run the following statements
 ~~~~
 CREATE TABLE producer (
 producer_id SMALLINT(4) NOT NULL DEFAULT 0, 
