@@ -89,7 +89,7 @@ WHERE artist.artist_id=album.artist_id;
   - By default, the permission of the htdocs directory does NOT include writability. 
     + If you are using MacOS, You need to change the permission(You may need to enter your password).
   
-    ![ch8-chmod](../Resources/ch8-chomod.png)
+    ![ch8-chmod](../Resources/ch8-chmod.png)
     
     + If you are using Windows, run XAMPP as administrator.
     
