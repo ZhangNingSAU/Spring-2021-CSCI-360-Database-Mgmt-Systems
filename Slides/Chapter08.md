@@ -86,10 +86,16 @@ SELECT artist_name, album_name FROM artist, album
 WHERE artist.artist_id=album.artist_id;
 ~~~
 + We can change this SELECT query slightly to write this data into an output file as comma-separated values:
-  - By default, the permission of the htdocs directory does NOT include writability. You need to change the permission(You may need to enter your password).
+  - By default, the permission of the htdocs directory does NOT include writability. 
+    + If you are using MacOS, You need to change the permission(You may need to enter your password).
   
-  ![ch8-chmod](../Resources/ch8-chomod.png)
-  
+    ![ch8-chmod](../Resources/ch8-chomod.png)
+    
+    + If you are using Windows, run XAMPP as administrator.
+    
+    
+    ![windows](https://make.wordpress.org/core/files/2013/03/xampp-run-as-admin.png)
+    
   - If you are using Windows OS, replace `/opt/lampp/htdocs/` with `C:\xampp\htdocs\`
   - If the file has exsited, there will be an error(You need to delete that file first).
 ~~~~
