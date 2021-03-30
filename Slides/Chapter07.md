@@ -535,6 +535,7 @@ WHERE played = @recent;
 ## Transcation
 + In some cases, you want all or none of a series of operations to succeed.
 + `Transactions` allow you to batch together SQL statements as an indivisible set that either succeeds or has no effect on the database. 
++ At the conclusion, you have the option of committing (saving) the transaction to the database or rolling back (canceling) the transaction.
 # Table Types
 + MyISAM, InnoDB...
 + only the InnoDB table type supports foreign-key constraints.
