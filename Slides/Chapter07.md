@@ -542,10 +542,19 @@ WHERE played = @recent;
 + You can use the `SHOW TABLE STATUS` command to display technical information about how your tables are stored.
 + The `SHOW ENGINES` command displays a list of all table types and indicates whether they’re available for use on your MySQL installation.
 ## Create or Alter table types
++ If you followed the instructions in Chapter 1 to install MySQL, 
 ~~~~
 CREATE TABLE mytable (field INT(2)) type=MyISAM;
 
 ALTER TABLE artist type = InnoDB;
+~~~~
++ If you use XAMPP
+~~~~
+~~~~
+CREATE TABLE mytable (field INT(2)) type=MyISAM;
+
+ALTER TABLE artist ENGINE = InnoDB;
+~~~~
 ~~~~
 ## Check table taype
 + syntax
@@ -574,12 +583,20 @@ SHOW CREATE TABLE table_name；
 + Transactions are the key feature that make InnoDB different from MyISAM.
 + Example: no need to use the first two ALTER commands because we are using XAMPP in this class and the default table type is InnoDB.
 ~~~
-ALTER TABLE artist type = InnoDB;
-ALTER TABLE album type = InnoDB;
+-- ALTER TABLE artist type = InnoDB;
+-- ALTER TABLE album type = InnoDB;
+
+START TRANSACTION;
+INSERT INTO artist VALUES (8, "The Cure");
+INSERT INTO album VALUES (8, "The Who");
+COMMIT;
+~~~
+
+~~~
 START TRANSACTION;
 INSERT INTO artist VALUES (8, "The Cure");
 INSERT INTO album VALUES (8, 1, "Disintegration");
-COMMIT;
+ROLLBACK;
 ~~~
 ## BDB
 + The Berkeley Database (BDB) table type can survive the same types of database crashes as the InnoDB table type, and also has the COMMIT and ROLLBACK functionality we showed you in the previous section.
@@ -592,3 +609,4 @@ COMMIT;
     - Gamma-quality interface and limited support
     - It’s disk-hungry, like InnoDB
     - It’s difficult to set up
++ Note: BDB is not supported in XAMPP.
