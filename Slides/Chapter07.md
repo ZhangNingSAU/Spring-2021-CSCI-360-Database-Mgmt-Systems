@@ -547,6 +547,11 @@ CREATE TABLE mytable (field INT(2)) type=MyISAM;
 
 ALTER TABLE artist type = InnoDB;
 ~~~~
+## Check table taype
++ syntax
+~~~~
+SHOW CREATE TABLE table_name；
+~~~~
 ## MyISAM
 + It’s an all-around performer that’s designed for typical applications; it supports very fast querying and has very low overhead for changes to data. It’s also very flexible.
 ## Memory or Heap
