@@ -104,6 +104,75 @@ WHERE artist.artist_id=album.artist_id
 INTO OUTFILE '/opt/lampp/htdocs/artists_and_albums.csv' FIELDS TERMINATED BY ',';
 ~~~~
 # 4.Creating Tables with Queries
++ You can create a table or easily create a copy of a table using a query.
+## duplicate the structure of a table 
++ syntax
+~~~~
+CREATE TABLE new_table_name LIKE existing_table_name;
+~~~~
++ The LIKE syntax allows you to create a new table with exactly the same structure as another, including keys.
++ It doesn’t copy the data across.
++ You can also use the IF NOT EXISTS and TEMPORARY features with this syntax.
++ Example
+~~~
+CREATE TABLE artist_2 LIKE artist;
+
+DESCRIBE artist_2;
+
+SELECT * FROM artist_2;
+~~~
+## create a table and copy some data
+### creata a table with the same structures
++ Syntax
+~~~~
+CREATE TABLE new_table_name a_query
+~~~~
++ Example
+~~~
+CREATE TABLE artist_3 SELECT * from artist;
+
+SELECT * FROM artist_3;
+~~~
+### create a table with new structures
++ Syntax
+~~~~
+CREATE TABLE new_table_name (new_structures) a_query
+~~~~
++ Example
+~~~~
+CREATE TABLE report (artist_name CHAR(128), album_name CHAR(128))
+SELECT artist_name, album_name FROM artist INNER JOIN album
+USING (artist_id);
+
+SELECT * FROM report;
+
+DESCRIBE artist_2;
+~~~~
++ **It doesn’t copy the indexes (or foreign keys, if you use them)**
+  - Note: primary key is also an index.
+~~~~
+DESCRIBE artist_2;
+
+SHOW CREATE TABLE artist_2;
+~~~~
+  - to solve this problem: 
+    + 1. use the LIKE statement to create the empty table with the indexes, thencopy the data across using an INSERT with a SELECT statement as de- scribed earlier in this chapter in “Inserting Data Using Queries.”
+    + 2. use CREATE TABLE with a SELECT statement, and then add indexes using ALTER TABLE as described in Chapter 6.
+    + 3. The third way is to use the UNIQUE (or PRIMARY KEY or KEY) keyword in combination with the CREATE TABLE and SELECT to add a primary-key index.( The keywords UNIQUE and PRIMARY KEY can be interchanged.)
+    ~~~
+    CREATE TABLE artist_2 (UNIQUE(artist_id))
+    SELECT * FROM artist;
+    
+    DESCRIBE artist_2;
+    ~~~
+ - You can use different modifiers when you’re creating tables using these techniques.
+ ~~~~
+ CREATE TABLE artist_3
+ (artist_id SMALLINT(5) NOT NULL AUTO_INCREMENT,
+ artist_name CHAR(128) NOT NULL DEFAULT "New Order",
+ PRIMARY KEY (artist_id), KEY (artist_name))
+ SELECT * FROM artist;
+ ~~~~
 # 5.Updates and Deletes with Multiple Tables
 ## 5.1 Deletion
 ## 5.2 Updates
