@@ -17,7 +17,7 @@
   
   ![division2](../Resources/division2.png)
 
-+ Now, let's take a look at Q7 in HW5: Print supplier numbers for suppliers who ship at least all those parts shipped by supplier s3. Do not include s3 in the answer(And do not use `COUNT()`) and the shipment table.
++ Now, let's take a look at Q7 in HW5: Print supplier numbers for suppliers who ship at least all those parts shipped by supplier s3. Do not include s3 in the answer(And do not use `COUNT()`).
 
 shipment
 
