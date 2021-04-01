@@ -54,6 +54,81 @@ shipment
 + The last step is the DIVISION in MySQL
 ## DIVISION of Two Queries
 + DIVISION is not part of the SQL standard. Most RDBMSs don’t provide such operator.
-+ However, DIVISION can be achieved by using `NOT EXISTS` and `MINUS`.
-+ 
++ However, DIVISION can be achieved by using `NOT EXISTS` and `NOT IN`.
+
+~~~~
+SELECT DISTINCT Sno
+FROM (SELECT Sno, Pno FROM shipment Where Sno != 's3') AS R
+WHERE NOT EXISTS(
+                 SELECT Pno
+                 FROM shipment
+                 WHERE Sno='s3' AND
+                 Pno NOT IN(
+                 SELECT Pno
+                 FROM shipment
+                 WHERE Sno = R.Sno)
+                 );
+~~~~
++ Since R and S come from the same table, we can do it in another way
+~~~~
+SELECT DISTINCT Sno
+FROM shipment AS S1
+WHERE NOT EXISTS(
+                 SELECT Pno
+                 FROM shipment
+                 WHERE Sno='s3' AND
+                 Pno NOT IN(
+                 SELECT Pno
+                 FROM shipment
+                 WHERE Sno = S1.Sno)
+                 )
+      AND Sno != 's3';
+~~~~
++ More examples for [DIVISION](https://www.red-gate.com/simple-talk/sql/t-sql-programming/divided-we-stand-the-sql-of-relational-division/)
+
+# Method 2: using COUNT() function
+~~~
+SELECT Sno from 
+(SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3') AS temp
+GROUP BY Sno
+HAVING COUNT(Pno) = (SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3' )
+AND Sno !='s3';
+~~~
+
+or
+
+~~~
+SELECT Sno from 
+(SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3') AS temp
+GROUP BY Sno
+HAVING COUNT(Pno) = (SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3');
+~~~
+
++ Let's analyze the second statement a little bit:
+  - `SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3'` gives us other suppliers who ship at least one part shipped by s3.
+  
+  |Sno|Pno|
+  |---|---|
+  |s1|p2|
+  |s2|p2|
+  |s4|p2|
+  |s1|p3|
+  |s4|p3|
+  
+ - `SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3'` give us the number of parts shipped by s3.
+ 
+ |Count(Pno)|
+ |---|
+ |2|
+ 
+ - the whole statement will find out Sno who ships at least one part shipped by s3 and who ships at least the same number of different parts. If we combine thest two conditions together, we can find out the information we need: other suppliers who ships at least the parts shipped by s3.
+ - Note: we can write the query in this way because (Sno,Pno) is the primary key in shipment, so the values of (Sno, Pno) are unique. Suppose the values of (Sno, Pno) could be NOT unique, then we may have a result by  `SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3'` like the following table, then s1 will not be included in the final result. To deal with situation like this, you need to SELECT all the columns contains in the primary key to avoid duplicates.
+  |Sno|Pno|
+  |---|---|
+  |s1|p2|
+  |s1|p2|
+  |s2|p2|
+  |s4|p2|
+  |s1|p3|
+  |s4|p3|
   
