@@ -129,7 +129,7 @@ HAVING COUNT(Pno) = (SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3
  |---|
  |2|
  
- - the whole statement will find out Sno who ships at least one part shipped by s3 and who ships at least the same number of different parts. If we combine thest two conditions together, we can find out the information we need: other suppliers who ships at least the parts shipped by s3.
+ - the whole statement will find out Sno who ships at least one part shipped by s3 and who ships at least the same number of different parts shipped by s3. If we combine thest two conditions together, we can find out the information we need: other suppliers who ships at least the parts shipped by s3.
  - Note: we can write the query in this way because (Sno,Pno) is the primary key in shipment, so the values of (Sno, Pno) are unique. Suppose the values of (Sno, Pno) could be NOT unique, then we may have a result by  `SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3'` like the following table, then s1 will not be included in the final result. To deal with situation like this, you need to SELECT all the columns contains in the primary key to avoid duplicates.
   |Sno|Pno|
   |---|---|
