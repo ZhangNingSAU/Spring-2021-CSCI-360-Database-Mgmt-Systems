@@ -40,7 +40,7 @@ shipment
 
 + Let's change it into a DIVISION problem. 
 
-![division2](../Resources/division2.png)
+![division3](../Resources/division3.png)
 
 + The next step should be how we can get the two tables.
   - table R
