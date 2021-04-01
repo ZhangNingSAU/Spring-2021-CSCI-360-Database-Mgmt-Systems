@@ -54,7 +54,7 @@ shipment
 + The last step is the DIVISION in MySQL
 ## DIVISION of Two Queries
 + DIVISION is not part of the SQL standard. Most RDBMSs don’t provide such operator.
-+ However, DIVISION can be achieved by using `NOT EXISTS` and `NOT IN`.
++ However, DIVISION can be achieved by using `NOT EXISTS` and `NOT IN` in MySQL.
 
 ~~~~
 SELECT DISTINCT Sno
@@ -107,6 +107,14 @@ HAVING COUNT(Pno) = (SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3
 + Let's analyze the second statement a little bit:
   - `SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3'` gives us other suppliers who ship at least one part shipped by s3.
   
+  |Sno|Pno|
+  |---|---|
+  |s1|p2|
+  |s2|p2|
+  |s4|p2|
+  |s1|p3|
+  |s4|p3|
+- or you can add `ORDER BY` to get a better table  `SELECT S1.Sno,S1.Pno from shipment S1 inner join shipment S2 USING (Pno) WHERE S2.Sno='s3' AND S1.Sno!='s3' ORDER BY Sno`
   |Sno|Pno|
   |---|---|
   |s1|p2|
