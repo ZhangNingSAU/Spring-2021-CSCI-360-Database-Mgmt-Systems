@@ -118,9 +118,9 @@ HAVING COUNT(Pno) = (SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3
   |Sno|Pno|
   |---|---|
   |s1|p2|
+  |s1|p3|
   |s2|p2|
   |s4|p2|
-  |s1|p3|
   |s4|p3|
   
  - `SELECT COUNT(Pno) FROM shipment Group by Sno Having Sno='s3'` give us the number of parts shipped by s3.
