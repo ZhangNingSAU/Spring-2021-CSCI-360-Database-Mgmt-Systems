@@ -15,7 +15,7 @@
 4. Print all information of the part(s) with the highest weight.<br>
 5. Print all information of the part(s) that doesn’t have the lowest weight.<br>
 6. Print supplier numbers for suppliers who are located in the same city as supplier S1. Do not include S1 in the answer.<br>
-7. Print supplier numbers for suppliers who ship at least all those parts shipped by supplier S3. Do not include S3 in the answer and do not "count".<br>
+7. Print supplier numbers for suppliers who ship at least all those parts shipped by supplier S3. Do not include S3 in the answer.<br>
 8. Print supplier numbers for suppliers who ship at least one type of red part.<br>
 9. Print supplier numbers for suppliers who do not ship any red parts.<br>
 10. Print supplier numbers for suppliers who ship ONLY red parts.<br>
