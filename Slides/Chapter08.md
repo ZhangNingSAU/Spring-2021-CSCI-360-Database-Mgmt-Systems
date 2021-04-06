@@ -174,7 +174,77 @@ SHOW CREATE TABLE artist_2;
  SELECT * FROM artist;
  ~~~~
 # 5.Updates and Deletes with Multiple Tables
++ delete or update rows from more than one table in one statement and can use those or other tables to decide what rows to change.
 ## 5.1 Deletion
++ Example 1: DELETE from one table
+  - task: remove tracks you’ve never listened to
+  - First, let's take a look at how to `select tracks you’ve never listened to`.
+  ~~~~
+  SELECT track_name FROM track WHERE NOT EXISTS
+  (SELECT * FROM played WHERE
+  track.artist_id = played.artist_id AND
+  track.album_id = played.album_id AND
+  track.track_id = played.track_id);
+  ~~~~
+  - turn it into a DELETE statement: outter query: SELECT -> DELETE
+    + first, the keyword DELETE is followed by the table or tables from which rows should be removed
+    + second, the keyword FROM is followed by the table or tables that should be queried to determine which rows to delete
+    + last, a WHERE clause (and any other query clauses, such as GROUP BY or HAVING) follow
+  ~~~~
+  DELETE track FROM track WHERE NOT EXISTS
+  (SELECT * FROM played WHERE
+  track.artist_id = played.artist_id AND
+  track.album_id = played.album_id AND
+  track.track_id = played.track_id);
+  ~~~~
++ Example 2: 
+  -  DELETE FROM some tables USING other tables to drive the querying process.
+    + the keywords DELETE FROM are followed by the table or tables from which you want to delete rows.
+    + The keyword USING then follows with a list of tables that are used in the query part of the statement
+    + then the WHERE clause or other associated query mechanisms
+  ~~~~
+  -- remove albums and tracks by the band New Order
+  DELETE FROM track, album USING artist, album, track WHERE
+  artist_name = "New Order" AND
+  artist.artist_id = album.artist_id AND
+  album.album_id = track.album_id;
+  ~~~~
++ Note that you can use clauses such as LEFT JOIN and INNER JOIN in DELETE statements. However, you can’t delete from a table that’s read from in a nested subquery.
+~~~~
+DELETE FROM artist WHERE artist_id IN (SELECT artist_id FROM artist);
+~~~~
 ## 5.2 Updates
++ Example: Captalize the album names that have been played.
+  - First, display the ablum names
+  ~~~~
+  SELECT DISTINCT album_name FROM
+  album INNER JOIN track USING (artist_id, album_id)
+  INNER JOIN played USING (artist_id, album_id, track_id);
+  ~~~~
+  - Now, let’s put that query into an UPDATE statement
+  ~~~~
+  UPDATE album INNER JOIN track USING (artist_id, album_id)
+  INNER JOIN played USING (artist_id, album_id, track_id)
+  SET album_name = UPPER(album_name);
+  ~~~~
++ Alternative
+~~~~
+UPDATE artist, album, track, played
+SET album_name = UPPER(album_name)
+WHERE artist.artist_id = album.artist_id AND
+album.artist_id = track.artist_id AND
+album.album_id = track.album_id AND
+track.artist_id = played.artist_id AND
+track.album_id = played.album_id AND
+track.track_id = played.track_id;
+~~~~
 # Replacing Data
++ You’ll sometimes want to overwrite data. You can do this in two ways using the tech- niques we’ve shown previously:
+  - Delete an existing row using its primary key and then insert a new replacement with the same primary key.
+  - Update a row using its primary key, replacing some or all of the values (except the primary key).
++ The `REPLACE` statement gives you a third, convenient way to change data.
++ Example 1:
+~~~
+REPLACE artist VALUES (2, "Nick Cave and The Bad Seeds");
+~~~
 # The EXPLAIN Statement
