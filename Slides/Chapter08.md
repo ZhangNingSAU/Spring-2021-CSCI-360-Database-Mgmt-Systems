@@ -146,7 +146,6 @@ USING (artist_id);
 
 SELECT * FROM report;
 
-DESCRIBE artist_2;
 ~~~~
 + **It doesn’t copy the indexes (or foreign keys, if you use them)**
   - Note: primary key is also an index.
