@@ -155,7 +155,7 @@ DESCRIBE artist_2;
 SHOW CREATE TABLE artist_2;
 ~~~~
   - to solve this problem: 
-    + 1. use the LIKE statement to create the empty table with the indexes, thencopy the data across using an INSERT with a SELECT statement as de- scribed earlier in this chapter in “Inserting Data Using Queries.”
+    + 1. use the LIKE statement to create the empty table with the indexes, then copy the data across using an INSERT with a SELECT statement as described earlier in this chapter in “Inserting Data Using Queries.”
     + 2. use CREATE TABLE with a SELECT statement, and then add indexes using ALTER TABLE as described in Chapter 6.
     + 3. The third way is to use the UNIQUE (or PRIMARY KEY or KEY) keyword in combination with the CREATE TABLE and SELECT to add a primary-key index.( The keywords UNIQUE and PRIMARY KEY can be interchanged.)
     ~~~
