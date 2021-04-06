@@ -54,3 +54,13 @@ https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/4b0b9663ba3e41c69e1f13e1a33c49ab
 ## Thursday 03/25/2021
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/10e60ca6b4234034bfc7440ba2f2f27b
+
+# Week 10
+## Tuesday 03/30/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/87509afc5e7a4b6fa6e85b615fe91d2c/playback
+## Thursday
+Midterm exam
+
+# Week 11
+## Tuesday 04/06/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/d2149b61e8254fb68e33966b419366d3
