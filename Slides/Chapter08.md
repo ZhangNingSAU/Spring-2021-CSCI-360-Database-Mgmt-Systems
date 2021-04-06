@@ -208,6 +208,14 @@ SHOW CREATE TABLE artist_2;
   artist.artist_id = album.artist_id AND
   album.album_id = track.album_id;
   ~~~~
++ To use the same syntax, we can rewrite the DELETE statement in Example 1 as
+  ~~~~
+  DELETE FROM track USING track WHERE NOT EXISTS
+  (SELECT * FROM played WHERE
+  track.artist_id = played.artist_id AND
+  track.album_id = played.album_id AND
+  track.track_id = played.track_id);
+  ~~~~
 + Note that you can use clauses such as LEFT JOIN and INNER JOIN in DELETE statements. However, you can’t delete from a table that’s read from in a nested subquery.
 ~~~~
 DELETE FROM artist WHERE artist_id IN (SELECT artist_id FROM artist);
