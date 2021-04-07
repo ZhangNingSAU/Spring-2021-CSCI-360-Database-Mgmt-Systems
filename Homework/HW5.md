@@ -28,7 +28,7 @@
 17. For each supplier (including the one who doesn’t ship any parts), print the supplier number and how many different parts shipped. For example, S1 6; S2 2, ...<br>
 18. For each supplier (including the one who doesn’t ship any parts), print the supplier number, supplier name, total cost of all shipments, and how many different parts shipped.<br>
  
-# Step 2: Save your queries in a file, name it as CSCI360_Homework4_JohnDoe(0123456).sql
+# Step 2: Save your queries in a file, name it as CSCI360_Homework5_JohnDoe(0123456).sql
 + Note: 
   - Place comments before each query(use “--” (double minus) to comment one line), e.g.:
   ~~~~
