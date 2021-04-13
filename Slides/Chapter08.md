@@ -262,7 +262,77 @@ track.track_id = played.track_id;
   - Update a row using its primary key, replacing some or all of the values (except the primary key).
 + The `REPLACE` statement gives you a third, convenient way to change data.
 + Example 1:
+  - Note: the following statement will violate the foreign key constraint if foreign key constraint exists.
 ~~~
 REPLACE artist VALUES (2, "Nick Cave and The Bad Seeds");
 ~~~
++ Example 2: let's try another one with no foreign key constraint violation.
+
+![ch8-replace1](../Resources/ch8-replace1.png)
+
++ Other syntax
+~~~~
+REPLACE INTO track VALUES (12,"KIDS",6,1,4.34);
+
+REPLACE INTO track (artist_id, album_id, track_id, track_name, time) VALUES (6,1,12,"KIDS",4.34);
+
+REPLACE track (artist_id, album_id, track_id, track_name, time) VALUES (6,1,12,"KIDS",4.34);
+
+REPLACE track SET artist_id=6, album_id=1, track_id=12, track_name="KIDS", time=4.34;
+~~~~
+
++ You can also bulk-replace into a table.
+  - Note: the following statement will violate the foreign key constraint if foreign key constraint exists. You can try to replace two instances in the track table while not in the played table.
+~~~~
+REPLACE artist (artist_id, artist_name)
+VALUES (2, "Nick Cave and The Bad Seeds"),
+(3, "Miles Dewey Davis");
+~~~~
+
++ In contrast, if there isn’t a matching row in a REPLACE statement, it acts just like an INSERT:
+  - note: only 1 row will be affected by the following statement.
+~~~~
+REPLACE INTO artist VALUES (10, "Jane's Addiction");
+~~~~
++ Replacing also works with a SELECT statement. Suppose you’ve added 10 tracks to it, but you don’t like the choice of the seventh track in the playlist. Here’s how you can replace it with a random choice of another track:
+~~~~
+REPLACE INTO shuffle (artist_id, album_id, track_id, sequence_id)
+SELECT artist_id, album_id, track_id, 7 FROM
+track ORDER BY RAND() LIMIT 1;
+~~~~
++ **If a table doesn’t have a primary key, replacing doesn’t make sense**. This is because there’s no way of uniquely identifying a matching row in order to delete it.
 # The EXPLAIN Statement
++ You’ll sometimes find that MySQL doesn’t run queries as quickly as you expect.
++ You can diagnose and solve query optimization problems using the EXPLAIN statement.
++ The `EXPLAIN` statement helps you learn about a SELECT query. Specifically, it tells you how MySQL is going to do the job in terms of the indexes, keys, and steps it’ll take if you ask it to resolve a query.
+
++ Example 1: a simple statement
+
+![ch8-explain1](../Resources/ch8-explain1.png)
+
+  - The `id` is 1, meaning the row in the output refers to the first (and only!) SELECT statement in this query. 
+    + Example with more SELECT statements.
+  
+    ![ch8-explain2](../Resources/ch8-explain2.png)
+  
+  - The `select_type` is SIMPLE, meaning it doesn’t use a UNION or subqueries.
+  - The `table` that this row is referring to is artist.
+  - The `type` of join is ALL, meaning all rows in the table are processed by this SELECT statement. This is often bad—but not in this case—and we’ll explain why later.
+  - The `possible_keys` that could be used are listed. In this case, no index will help find all rows in a table, so NULL is reported.
+  - The `key` that is actually used is listed, taken from the list of possible_keys. In this case, since no key is available, none is used.
+  - The `key_len` (key length) of the key MySQL plans to use is listed. Again, no key means a NULL key_len is reported.
+  - The `ref` (reference) columns or constants that are used with the key is listed. Again, none in this example.
+  - The `rows` that MySQL thinks it needs to process to get an answer are listed.
+  - Any `Extra` information about the query resolution is listed. Here, there’s none.
+  - In summary, the output tells you that all rows from the artist table will be processed (there are six of them), and no indexes will be used to resolve the query.
+
++ Example 2: inner join
+
+![ch8-explain2](../Resources/ch8-explain2.png)
+
+  - This time, there are two rows because there are two tables in the join.
+  - The first row is basically identical to the previous example.
+  - The `join` type for the `album` table is `ref`, meaning that all rows in the `album` table that match rows in the `artist` table will be read. In practice, this means one or more rows from the `album` table will be read for each `artist_id`.
+  - The `possible_keys` for `artist` and `album` are both only the `PRIMARY` key. A key isn’t used in `artist` (because we’re scanning the whole table), but the `key` used for `album` is that table’s `PRIMARY` key.
+  - The primary key used to search `album` has a `key_len` of 2 and is searched using the `music.artist.artist_id` value from the `artist` table.
+  - Again, this seems like a sensible strategy, and it fits with what we thought about in our design of the database.
