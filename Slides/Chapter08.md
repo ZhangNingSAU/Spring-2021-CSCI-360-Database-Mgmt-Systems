@@ -234,7 +234,7 @@ DELETE FROM artist WHERE artist_id IN (SELECT artist_id FROM artist);
   INNER JOIN played USING (artist_id, album_id, track_id)
   SET album_name = UPPER(album_name);
   ~~~~
-+ Alternative
++ Alternative 1
 ~~~~
 UPDATE artist, album, track, played
 SET album_name = UPPER(album_name)
@@ -245,6 +245,17 @@ track.artist_id = played.artist_id AND
 track.album_id = played.album_id AND
 track.track_id = played.track_id;
 ~~~~
++ Alternative 2
+  - SELECT Statement first
+  ~~~~
+  SELECT album_name FROM album WHERE (artist_id, album_id) in (SELECT artist_id, album_id FROM PLAYED INNER JOIN TRACK
+  USING(artist_id,album_id,track_id));
+  ~~~~
+  - Repalce SELECT with UPDATE
+  ~~~~
+  UPDATE album SET album_name=UPPER(album_name) WHERE (artist_id, album_id) in (SELECT artist_id, album_id FROM PLAYED INNER JOIN TRACK
+  USING(artist_id,album_id,track_id));
+  ~~~~
 # Replacing Data
 + You’ll sometimes want to overwrite data. You can do this in two ways using the tech- niques we’ve shown previously:
   - Delete an existing row using its primary key and then insert a new replacement with the same primary key.
