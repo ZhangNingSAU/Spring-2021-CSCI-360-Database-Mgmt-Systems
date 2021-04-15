@@ -257,7 +257,7 @@ track.track_id = played.track_id;
   USING(artist_id,album_id,track_id));
   ~~~~
 # Replacing Data
-+ You’ll sometimes want to overwrite data. You can do this in two ways using the tech- niques we’ve shown previously:
++ You’ll sometimes want to overwrite data. You can do this in two ways using the techniques we’ve shown previously:
   - Delete an existing row using its primary key and then insert a new replacement with the same primary key.
   - Update a row using its primary key, replacing some or all of the values (except the primary key).
 + The `REPLACE` statement gives you a third, convenient way to change data.
