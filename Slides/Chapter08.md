@@ -251,7 +251,7 @@ track.track_id = played.track_id;
 + Alternative 2
   - SELECT Statement first
   ~~~~
-  SELECT album_name FROM album WHERE (artist_id, album_id) in (SELECT artist_id, album_id FROM PLAYED INNER JOIN TRACK
+  SELECT album_name FROM album WHERE (artist_id, album_id) in (SELECT artist_id, album_id FROM played INNER JOIN track
   USING(artist_id,album_id,track_id));
   ~~~~
   - Repalce SELECT with UPDATE
