@@ -96,7 +96,7 @@ WHERE artist.artist_id=album.artist_id;
     
     ![windows](https://make.wordpress.org/core/files/2013/03/xampp-run-as-admin.png)
     
-  - If you are using Windows OS,  use the following command
+  - If you are using Windows OS,  you can also use the following command
     ~~~
     cacls C:\xampp\htdocs\ /g everyone:f
     ~~~
