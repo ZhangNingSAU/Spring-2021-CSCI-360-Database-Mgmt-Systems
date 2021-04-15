@@ -96,7 +96,10 @@ WHERE artist.artist_id=album.artist_id;
     
     ![windows](https://make.wordpress.org/core/files/2013/03/xampp-run-as-admin.png)
     
-  - If you are using Windows OS, replace `/opt/lampp/htdocs/` with `C:\xampp\htdocs\`
+  - If you are using Windows OS,  use the following command
+    ~~~
+    cacls C:\xampp\htdocs\ /g everyone:f
+    ~~~
   - If the file has exsited, there will be an error(You need to delete that file first).
 ~~~~
 SELECT artist_name, album_name FROM artist, album 
