@@ -340,3 +340,7 @@ track ORDER BY RAND() LIMIT 1;
 + Example 3: nested query
 
 ![ch8-explain4](../Resources/ch8-explain4.png)
+
++ Example 4: nested query
+
+![ch8-explain4](../Resources/ch8-explain5.png)
