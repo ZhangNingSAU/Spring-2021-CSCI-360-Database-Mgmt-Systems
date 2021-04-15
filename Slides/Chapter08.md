@@ -344,3 +344,6 @@ track ORDER BY RAND() LIMIT 1;
 + Example 4: nested query
 
 ![ch8-explain4](../Resources/ch8-explain5.png)
+
+
++ See more about `MySQL EXPLAIN` in [Sections 8.8.1 to 8.8.5 MySQL documentation](https://dev.mysql.com/doc/refman/8.0/en/using-explain.html).
