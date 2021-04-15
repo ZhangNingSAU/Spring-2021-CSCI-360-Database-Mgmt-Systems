@@ -336,3 +336,7 @@ track ORDER BY RAND() LIMIT 1;
   - The `possible_keys` for `artist` and `album` are both only the `PRIMARY` key. A key isn’t used in `artist` (because we’re scanning the whole table), but the `key` used for `album` is that table’s `PRIMARY` key.
   - The primary key used to search `album` has a `key_len` of 2 and is searched using the `music.artist.artist_id` value from the `artist` table.
   - Again, this seems like a sensible strategy, and it fits with what we thought about in our design of the database.
+
++ Example 3: nested query
+
+![ch8-explain4](../Resources/ch8-explain4.png)
