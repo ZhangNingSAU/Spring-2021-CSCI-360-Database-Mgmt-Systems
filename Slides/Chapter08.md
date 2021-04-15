@@ -328,7 +328,7 @@ track ORDER BY RAND() LIMIT 1;
 
 + Example 2: inner join
 
-![ch8-explain2](../Resources/ch8-explain2.png)
+![ch8-explain3](../Resources/ch8-explain3.png)
 
   - This time, there are two rows because there are two tables in the join.
   - The first row is basically identical to the previous example.
