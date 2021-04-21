@@ -167,10 +167,95 @@ GRANT ALL ON music.artist TO 'rose'@'localhost';
   - Column privileges
 + If any of these permit the statement, it proceeds. This has an important consequence: if you allow a privilege for a statement at a level, it doesn’t matter if it’s allowed or disallowed at another level.
 # 6. Users and Hosts
++ basic principles of connecting to the server (how MySQL validates a connection?)
+
+
 ## 6.1 Local and Remote Users
++ A `local user` connects to the server and accesses the databases from the same computer that the MySQL server is running on (localhost).
+  - If the client is local, the connection is made internally through a Unix socket (for Linux and Mac OS X) or through a named pipe (for Win- dows). 
+  - This is generally much faster than the TCP/IP network connection used for remote access.
+  
+  
+  
++ A `remote user` connects to the server and accesses the databases from another computer.
+  
+  ![ch9-7](../Resources/ch9-7.png)
+  
+  - You should be careful not to give remote access to the database when you can avoid it.
+  
+  ![ch9-8](../Resources/ch9-8.png)
+  
+  ![ch9-9](../Resources/ch9-9.png)
+  
+  
 ## 6.2 Creating a New Remote User
+
+![ch9-10](../Resources/ch9-10.png)
+
++ Let's first log into the MySQL server on `ruttle` as the `root` user and create a local user
+~~~~
+GRANT ALL on *.* TO 'hugh'@'localhost' IDENTIFIED BY 'the_password';
+~~~~
++ Then, we can log in as `hugh`
+  - Including the `--host=localhost` actually has no effect, since localhost is the default anyway.
+~~~~
+-- Don't forget to QUIT first
+mysql --host=localhost --user=hugh --password=the_password
+~~~~
++ We can also use `localhost`'s IP address `127.0.0.1`
+~~~~
+mysql --user=hugh --host=127.0.0.1 --password=the_password
+~~~~
++ Finally, let's try the real IP address ``
+
 ## 6.3 Anonymous Users
++ Wildcard characters aren’t allowed in usernames. e.g. `fred%'@'localhost`
++ We can have a user with an empty username that allows anonymous connections and matches all usernames.
+  - example: create an anonymous local user who can read data from the music database.
+    + Note that the username is specified as two single quotes, with nothing between them.
+    + The MySQL server decides which user to log you in as based on a checklist we describe in the next section
+  
+  ![ch9-11](../Resources/ch9-11.png)
+  
+
 ## 6.4 Which User Is Connected?
++ what happens if more than one user and host combination matches when a connection is attempted?
++ Example:
+  - Let's create two users
+  ~~~~
+  -- The first user dave can now connect from any host and run only SELECT statements on the music database. '%' means all hosts
+  GRANT SELECT ON music.* TO 'dave'@'%' IDENTIFIED BY 'the_password';
+  -- The second user dave is specific to the localhost and is allowed all privileges on music.
+  GRANT ALL ON music.* TO 'dave'@'localhost' IDENTIFIED BY 'the_password';
+  ~~~~
+  - Connect to server on `localhost`
+  ~~~~
+  mysql --user=dave --password=the_password
+  ~~~~
+  
+  ![ch9-12](../Resources/ch9-12.png)
+  
+  - the user is `dave` on `localhost`, who has priviledge `ALL`, let's double check it.
+  ~~~~
+  USE music;
+  INSERT INTO artist VALUES (8, "The Psychedelic Furs");
+  ~~~~
+  
++ **How does MySQL decide which user to use when you establish a connection?**
+  - 1. MySQL sorts the user entries by host from most to least specific and, for duplicate hosts, any anonymous user entry appears last.
+  
+  |most to least specific user by host|
+  |----|
+  |'dave'@'localhost'|
+  |''@'localhost'|
+  |'hugh'@'192.168.1.%'|
+  |'dave'@'%'|
+  
+  
+  - 2. The second step in establishing a connection is matching your connection request against the sorted list.
+    + The first entry that matches your connection requirements is used.
+    + If none match, you’re denied access.
+  
 ## 7. Checking Privileges
 ## 8. Revoking Privileges
 ## 9. Removing Users
