@@ -72,3 +72,10 @@ https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/9ad274cac7514bc495e02dfa50b4a6df/playback
 ## Thursday 04/15/2021
 https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/866ccda1dd0b403f875e3b92dd3b12f6
+
+
+# Week 13
+## Tuesday 04/20/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/172023a1553e442aabeacbfd276f2a9c
+## Thursday 04/22/2021
+https://stambrose.webex.com/recordingservice/sites/stambrose/recording/playback/0fa99c61809646999238e7cfbe6feacc
