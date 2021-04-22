@@ -143,8 +143,8 @@ GRANT GRANT OPTION ON music.* TO 'hugh'@'localhost';
 QUIT
 mysql --user=hugh
 
--- let’s give our privileges to another user(passes on all privileges to a new user, selina (with no password). )
-GRANT ALL ON music.* TO 'selina'@'localhost';
+-- let’s give our privileges to another user(passes on all privileges to a new user, selina with password the_password. )
+GRANT ALL ON music.* TO 'selina'@'localhost' IDENTIFIED BY 'the_password';
 -- pass on the GRANT OPTION privilege, so that selina can do the same things hugh can on the music database
 GRANT GRANT OPTION ON music.* TO 'selina'@'localhost';
 -- note: we can combine the two statements above as one
