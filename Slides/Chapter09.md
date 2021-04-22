@@ -130,7 +130,10 @@ SELECT time FROM TRACK LIMIT 3;
 -- connect to the monitor as the root user
 mysql --user=root
 
--- create a MySQL user hugh (with no password!)
+-- we can not create a user without password using GRANT ALL ON music.* TO 'hugh'@'localhost', we need to use CREATE USER statement
+-- 'hugh'@'localhost' has no privileges.
+CREATE USER 'hugh'@'localhost'
+-- grant privileges now
 GRANT ALL ON music.* TO 'hugh'@'localhost';
 
 -- allows him to pass on his privileges for the music database to other users
