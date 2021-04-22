@@ -257,6 +257,7 @@ or
 GRANT ALL ON *.* TO 'jill'@'192.168.1.%' IDENTIFIED BY 'the_password';
 ~~~~
 + **Host specification examples**
+
 |Host specification |  Example |  Effect|
 |----|----|----|
 |Hostname|'lloyd'@'lloyd.lloydhouse.com'|1|
