@@ -189,8 +189,15 @@ GRANT ALL ON music.artist TO 'rose'@'localhost';
   
   
 ## 6.2 Creating a New Remote User
++ A home network with domain `invyhome.com`
 
 ![ch9-10](../Resources/ch9-10.png)
+
+|IP|complete name|
+|---|---|
+|192.168.1.2|ruttle.invyhome.com|
+|192.168.1.4|toorak.invyhome.com|
+|192.168.1.6|yazd.invyhome.com|
 
 + Let's first log into the MySQL server on `ruttle` as the `root` user and create a local user
 ~~~~
@@ -206,8 +213,60 @@ mysql --host=localhost --user=hugh --password=the_password
 ~~~~
 mysql --user=hugh --host=127.0.0.1 --password=the_password
 ~~~~
-+ Finally, let's try the real IP address ``
++ Now, let’s try connecting to the MySQL `server on ruttle` from `ruttle` by using its `IP address` or `name`
+~~~~
+-- will not work
+mysql --user=hugh --host=192.168.1.2 --password=the_password
+~~~~
+~~~~
+-- will not work
+mysql --user=hugh --host=ruttle.invyhome.com --password=the_password
+~~~~
 
++ If you want to allow access from 192.168.1.2 (and its equiv- alent domain name ruttle.invyhome.com), you need to grant those privileges by creating a new user with the username hugh and the host 192.168.1.2.
+  - Note that each username and host pair is treated as a separate user and has its own password.
++ Log in to the monitor as the root user, and type:
+~~~~
+GRANT ALL ON *.* TO 'hugh'@'192.168.1.2' IDENTIFIED BY 'the_password';
+~~~~
++ quit the monitor and try connecting as the user `hugh`:
+~~~~
+mysql --user=hugh --host=192.168.1.2 --password=the_password
+~~~~
+
++ Suppose now that you want to allow toorak to access the MySQL server that’s running on ruttle. Do the following on `ruttle`
+~~~~
+GRANT ALL ON *.* TO 'hugh'@'toorak.invyhome.com' IDENTIFIED BY 'the_password';
+~~~~
++ You’ll now find that you can run a MySQL monitor on toorak and connect to ruttle using the following command:
+  - Using the IP addresses 192.168.1.2 for ruttle.invyhome.com and 192.168.1.4 for toorak.invyhome.com should work too, and it’s more secure, as IP addresses are harder to spoof than domain names.
+~~~~
+mysql --user=hugh --host=ruttle.invyhome.com --password=the_password
+~~~~
+
++ Let’s consider other ways to allow the same user to connect from several locations. Suppose you want to allow jill to connect from any of the machines in the domain invyhome.com.
+~~~~
+GRANT ALL ON *.* TO 'jill'@'%.invyhome.com' IDENTIFIED BY 'the_password';
+~~~~
+or
+~~~~
+GRANT ALL ON *.* TO 'jill'@'192.168.1.%' IDENTIFIED BY 'the_password';
+~~~~
++ **Host specification examples**
+|Host specification |  Example |  Effect|
+|----|----|----|
+|Hostname|'lloyd'@'lloyd.lloydhouse.com'|1|
+|Domain name|'lloyd'@'%.lloydhouse.com'|2|
+|IP address|'lloyd'@'192.168.1.2'|3|
+|IP address range|'lloyd'@'192.168.1.0/255.255.255.0'|4|
+|Any machine|'lloyd'@'%' or 'lloyd'|5|
+  
+  - The effect of each of these settings is as follows:
+    + 1. Connections are allowed only from the machine lloyd.lloydhouse.com.
+    + 2. Connections are allowed from any machine in the lloydhouse.com domain.
+    + 3. Connections are allowed only from the machine with the IP address 192.168.1.2.
+    + 4. equivalen to '192.168.1.%'
+    + 5. Connections are allowed from any machine
 ## 6.3 Anonymous Users
 + Wildcard characters aren’t allowed in usernames. e.g. `fred%'@'localhost`
 + We can have a user with an empty username that allows anonymous connections and matches all usernames.
@@ -255,11 +314,105 @@ mysql --user=hugh --host=127.0.0.1 --password=the_password
   - 2. The second step in establishing a connection is matching your connection request against the sorted list.
     + The first entry that matches your connection requirements is used.
     + If none match, you’re denied access.
-  
+  - connecting from the `local host` using the username `dave` matches `'dave'@'localhost'`
+  - connecting from the `local host` using the username `hugh` matches `''@'localhost'`
+  - connecting from the network machine `yazd (192.168.1.6)` as `dave` matches `'dave'@'%'`
 ## 7. Checking Privileges
+### `SHOW GRANTS`
++ Checking the current user
+
+![ch9-13](../Resources/ch9-13.png)
+
++ Checking the privileges of other users only if you have access to the `mysql` database
+  - The first GRANT statement is a default privilege that creates the user with no privileges
+  - The later statements add the privileges.
+  
+![ch9-14](../Resources/ch9-14.png)
+
+### `mysqlaccess`: see what level of access a particular user has for a particular database
++ Note:
+  - 1. open the terminal from XAMPP, or do `QUIT` if you have logged in.
+  - 2. use the correct password. If no password for user, you can ignore this argument
+ 
+~~~~
+mysqlaccess --user=root --password=the_mysql_root_password partmusic music
+~~~~
+
 ## 8. Revoking Privileges
++ Basic syntax
+~~~~
+-- log in as 'root'@'localhost'
+REVOKE SELECT (time) ON music.track FROM 'partmusic'@'localhost';
+~~~~
++ Removing privileges using the basic syntax is laborious
+~~~~
+REVOKE SELECT (track_id) ON music.track FROM 'partmusic'@'localhost';
+REVOKE ALL PRIVILEGES ON music.artist FROM 'partmusic'@'localhost';
+REVOKE ALL PRIVILEGES ON music.album FROM 'partmusic'@'localhost';
+~~~~
++ remove all database-, table-, and column-level privileges of a user at once
+~~~
+REVOKE ALL PRIVILEGES FROM 'partmusic'@'localhost';
+~~~
+or
+~~~~
+REVOKE GRANT OPTION FROM 'partmusic'@'localhost';
+~~~~
++ You can combine the two statements above as one
+~~~~
+REVOKE ALL PRIVILEGES, GRANT OPTION FROM 'partmusic'@'localhost';
+~~~~
+
 ## 9. Removing Users
++ Removing privileges can not remove the user. This means the user can still connect, but has no privileges when she does. You can check this using the SHOW GRANTS statement:
+~~~~
+SHOW GRANTS FOR 'partmusic'@'localhost';
+~~~~
++ `DROP USER` statement to remove the user
+~~~~
+DROP USER 'partmusic'@'localhost';
+~~~~
++ Whenever you update the grant tables in the mysql database directly, you have to use the `FLUSH PRIVILEGES` instruction to tell the server to read in the updated data:
+~~~~
+FLUSH PRIVILEGES;
+~~~~
 ## 10. Understanding and Changing Passwords
++ The simplest method to set a password is to use the IDENTIFIED BY clause when you create or modify the privileges of a user.
+~~~
+GRANT ALL ON music.* TO 'allmusic'@'localhost' IDENTIFIED BY 'the_password';
+~~~
++ This process takes the plain-text string `the_password`, hashes it using the MySQL `PASSWORD( )` function, and stores the hashed string in the user table in the mysql data-base.
+
+![ch9-15.png](../Resources/ch9-15.png)
+
++ If the user exists, you can change the password while you’re granting new privileges, or simply by granting no further privileges as follows:
+~~~~
+-- create user selina with password the_password
+GRANT ALL ON music.* TO 'selina'@'localhost' IDENTIFIED BY 'the_password';
+-- change the password
+GRANT USAGE ON *.* TO 'selina'@'localhost' IDENTIFIED BY 'another_password';
+~~~~
++  `SET PASSWORD` statement
+~~~~
+SET PASSWORD FOR 'selina'@'localhost' = PASSWORD('another_password');
+~~~~
++  You can set the password for the user you’re logged in as by using:
+~~~~
+SET PASSWORD=PASSWORD('the_password');
+~~~~
+
+
++ In both cases, remember to include the `PASSWORD( )` function in the statement; if you leave it out, the server will store the plain-text password instead of the hashed string.
+
++ You can also use the mysqladmin password command to change your own password from the `command line`.
+  - If the password contains spaces, enclose it in quotes.
+~~~~
+mysqladmin --user=your_mysql_username --password=your_old_mysql_password password "your new mysql password"
+~~~~
++ remove a user’s password
+~~~~
+SET PASSWORD FOR 'selina'@'localhost' = '';
+~~~~
 ## 11. The Default Users
 ## 11.1 Default User Configuration
 ## 11.2 Securing the Default Users
