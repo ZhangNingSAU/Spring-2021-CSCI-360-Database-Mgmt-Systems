@@ -197,7 +197,7 @@ GRANT ALL ON music.artist TO 'rose'@'localhost';
 
 ![ch9-10](../Resources/ch9-10.png)
 
-|IP|complete name|
+|IP|host name|
 |---|---|
 |192.168.1.2|ruttle.invyhome.com|
 |192.168.1.4|toorak.invyhome.com|
