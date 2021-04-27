@@ -340,6 +340,7 @@ GRANT ALL ON *.* TO 'jill'@'192.168.1.%' IDENTIFIED BY 'the_password';
   - 2. use the correct password. If no password for user, you can ignore this argument
  
 ~~~~
+-- Note: mysqlaccess doesn't work in xampp
 mysqlaccess --user=root --password=the_mysql_root_password partmusic music
 ~~~~
 
