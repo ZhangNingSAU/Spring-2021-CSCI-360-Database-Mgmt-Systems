@@ -413,6 +413,7 @@ SET PASSWORD=PASSWORD('the_password');
 + You can also use the mysqladmin password command to change your own password from the `command line`.
   - If the password contains spaces, enclose it in quotes.
 ~~~~
+-- mysqladmin does not work either in XAMPP
 mysqladmin --user=your_mysql_username --password=your_old_mysql_password password "your new mysql password"
 ~~~~
 + remove a user’s password
