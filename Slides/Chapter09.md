@@ -556,6 +556,7 @@ MAX_CONNECTIONS_PER_HOUR 5;
 ## 12.4 The mysql_setpermission Program
 + mysql_setpermission is an interactive program that allows you to choose from a menu of routine database and user administration tasks, such as creating a database, setting a user password, and modifying user privileges. 
 ~~~
+-- It doesn't work if there is some Perl setting problem
 mysql_setpermission --user=root --password=the_mysql_root_password
 ~~~
 ## 13. Managing Privileges with SQL
