@@ -448,6 +448,8 @@ SHOW GRANTS for 'root'@'localhost';
 ~~~~
 SHOW GRANTS for ''@'localhost';
 ~~~~
+
++ Note: `We are using XAMPP, So a linux platfrom`.
 #### Windows
 + only `root` user by default
 ~~~~
