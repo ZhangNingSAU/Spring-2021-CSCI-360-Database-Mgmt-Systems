@@ -267,11 +267,11 @@ GRANT ALL ON *.* TO 'jill'@'192.168.1.%' IDENTIFIED BY 'the_password';
 |Any machine|'lloyd'@'%' or 'lloyd'|5|
   
   - The effect of each of these settings is as follows:
-    + 1. Connections are allowed only from the machine lloyd.lloydhouse.com.
-    + 2. Connections are allowed from any machine in the lloydhouse.com domain.
-    + 3. Connections are allowed only from the machine with the IP address 192.168.1.2.
-    + 4. equivalen to '192.168.1.%'
-    + 5. Connections are allowed from any machine
+    1. Connections are allowed only from the machine lloyd.lloydhouse.com.
+    2. Connections are allowed from any machine in the lloydhouse.com domain.
+    3. Connections are allowed only from the machine with the IP address 192.168.1.2.
+    4. equivalen to '192.168.1.%'
+    5. Connections are allowed from any machine
 ## 6.3 Anonymous Users
 + Wildcard characters aren’t allowed in usernames. e.g. `fred%'@'localhost`
 + We can have a user with an empty username that allows anonymous connections and matches all usernames.
