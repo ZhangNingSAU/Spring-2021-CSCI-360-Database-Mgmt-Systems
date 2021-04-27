@@ -532,8 +532,8 @@ Think very carefully before granting these privileges:
 
 Tips:
 
-+ You should avoid granting any privileges on the special mysql database. This is a default part of any MySQL installation that stores user privileges. Nobody other than the MySQL root user should be able to be read, change, or delete information in this database.
-+ Avoid granting access to anonymous users. You should instead require that all users be explicitly identified, along with the hosts they can connect from and the databases that they can access.
++ You should avoid granting any privileges on the special `mysql` database. This is a default part of any MySQL installation that stores user privileges. Nobody other than the MySQL root user should be able to be read, change, or delete information in this database.
++ Avoid granting access to `anonymous users`. You should instead require that all users be explicitly identified, along with the hosts they can connect from and the databases that they can access.
 + Choose good passwords: always specify passwords when creating users, and ensure these passwords meet the basic criteria of being hard to guess while remaining straight- forward to remember.
 + Finally, use secure remote connections: if you allow remote access to the MySQL server, require that these connections be encrypted. We don’t discuss how to do this, but you’ll find more detail under the heading “Using Secure Connections” in the MySQL manual.
 ## 12.3 Resource-Limit Controls
