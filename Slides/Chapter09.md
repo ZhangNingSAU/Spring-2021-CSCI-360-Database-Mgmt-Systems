@@ -418,20 +418,171 @@ mysqladmin --user=your_mysql_username --password=your_old_mysql_password passwor
 ~~~~
 SET PASSWORD FOR 'selina'@'localhost' = '';
 ~~~~
++ create a new user with the same password as another, but without knowing the plain text password. You can use `SHOW GRANT` or use `mysql database` to access to the hashed value.
+
+~~~~
+GRANT USAGE ON *.* TO 'partmusic'@'localhost' IDENTIFIED BY PASSWORD '*14E65567ABDB5135D0CFD9A70B3032C179A49EE7';
+-- but you still need to use the plain text password to log in.
+mysql --user=partmusic --password=the_password
+~~~~
 ## 11. The Default Users
-## 11.1 Default User Configuration
-## 11.2 Securing the Default Users
++ the user accounts that are created when MySQL is installed.(one or two default users)
+  - `root`: This is the superuser, who can do anything to the server, users, databases, and data.
+  - `anonymous`: 
+    + This user has no username; you can use it to connect to the server without sup- plying any credentials.
+    + It is used when host credentials match but the requested username doesn’t.
+    + The anonymous user has very limited privileges by default.
+### 11.1 Default User Configuration
+#### Linux and Mac OS X
++ You can see the default configuration by listing the user- and hostnames in the user table of the mysql database:
+~~~~
+SELECT User,Host FROM mysql.user;
+~~~~
++ You can use the `SHOW GRANT FOR 'user_name'@'host_name'` to check the defaut GRANT statement used to create it. e.g.:
+~~~~
+SHOW GRANTS for 'root'@'localhost';
+~~~~
++ For the anonymous user
+~~~~
+SHOW GRANTS for ''@'localhost';
+~~~~
+#### Windows
++ only `root` user by default
+~~~~
+SELECT User,Host FROM mysql.user;
+
+SHOW GRANTS for 'root'@'localhost';
+~~~~
+### 11.2 Securing the Default Users
+take steps to secure the users
++ Always set a password for the root user
++ Remove privileges for the test databases
+  - Allowing any user to work with the test database and any database beginning with the string test_ is insecure.
++ Remove anonymous access
+  - Unless you want anyone to be able to connect to your MySQL server, it’s better to allow access only by named users.
++ Remove remote access
+  - Unless there’s a requirement for the server to allow client connections from other machines, it’s better to allow access from only the localhost. If you need remote access, read “Devising a User Security Policy” to devise an appropriate access policy.
+~~~~
+-- log in to the monitor as the root user
+mysql --user=root --password=the_mysql_root_password
+
+-- set a password for the root user connecting from localhost
+SET PASSWORD FOR 'root'@'localhost' = password('the_mysql_root_password');
+
+-- remove access to the test databases
+REVOKE ALL ON test.* FROM ''@'%';
+REVOKE ALL ON `test\_%`.* FROM ''@'%';
+
+-- never need to remove test database
+-- DROP DATABASE test;
+
+-- remove anonymous access
+DROP USER ''@'localhost';
+DROP USER ''@'host.domain; -- use this statement if @'host.domain exists
+
+-- Alternatively, you can manually update the grant tables
+DELETE FROM mysql.user WHERE User = '';
+FLUSH PRIVILEGES;
+
+-- Instead of deleting the anonymous accounts, you can disable unauthenticated access to the server by setting passwords for these accounts:
+-- better to remove any anonymous users instead of setting passwords
+UPDATE mysql.user SET Password = PASSWORD('the_new_anonymous_user_password')
+WHERE User = '';
+FLUSH PRIVILEGES;
+
+-- Since we’ve removed the anonymous user, the only remaining user is root; we can remove remote access for root with
+-- replace host.domain with the true host name
+DROP USER 'root'@'host.domain'
+
+-- Again, you can instead manually modify the grant tables; here, you can delete all accounts that have a host other then localhost
+DELETE FROM mysql.user WHERE Host <> 'localhost';
+FLUSH PRIVILEGES;
+~~~~
+
++ Note: **you can even remove the root account!**, so do not use the DELETE statement if we have some alternative.
 ## 12. Devising a User Security Policy
++ develop a security policy and a maintainable, flexible, secure MySQL installation.
++  how to balance server performance against security.
+  - Flexibility and security are enemies. 
++  develop the thinking that’ll allow you to effectively manage your MySQL server.
 ## 12.1 Choosing Users and Privileges
++ `default allow` vs. `default deny` philosophy
+  - In the “default allow” philosophy, you decide on all of the users you might need and grant them all privileges. You then explicitly revoke any privileges they don’t need.
+  - In the “default deny” philosophy, you decide on the users you must have and create them with no privileges. You then explicitly grant the privileges that these users need. 
+  - Security experts prefer the “default deny” approach over the “default allow” one, since there’s a smaller chance that you’ll create users or privileges that make your server insecure. 
+  - Developers tend to prefer the “default allow” approach, since you only need to think about the few things that you don’t want to happen, rather than the larger set of things you do want to allow. 
+  - We recommend that you use the “default deny” approach during production, but the “default allow” approach is acceptable if you’re just experimenting on noncritical data in a relatively secure environment.
+
++ “default deny” philosophy:
+  - Clients: From what computers does the database server need to be accessed?
+  - Users: Who needs access to the database server? 
+  - Privileges: What needs to be done?
 ## 12.2 More Security Tips
+Think very carefully before granting these privileges:
++ `ALTER`: The ALTER privilege allows the user to change the structure of databases
++ `FILE`: The FILE privilege allows the user to use statements that read and write disk files
++ `CREATE`, `DROP`, and `INDEX`: The INDEX privilege is a subset of CREATE, allowing only the key-creation feature
++ `GRANT OPTION`: This privilege allows one user to pass on privileges to another.
++ `PROCESS`: This allows the user to view current processes, including the statements that started them.
++ `SHUTDOWN`: This allows a user to stop the server.
+Tips:
++ You should avoid granting any privileges on the special mysql database. This is a default part of any MySQL installation that stores user privileges. Nobody other than the MySQL root user should be able to be read, change, or delete information in this database.
++ Avoid granting access to anonymous users. You should instead require that all users be explicitly identified, along with the hosts they can connect from and the databases that they can access.
++ Choose good passwords: always specify passwords when creating users, and ensure these passwords meet the basic criteria of being hard to guess while remaining straight- forward to remember.
++ Finally, use secure remote connections: if you allow remote access to the MySQL server, require that these connections be encrypted. We don’t discuss how to do this, but you’ll find more detail under the heading “Using Secure Connections” in the MySQL manual.
 ## 12.3 Resource-Limit Controls
++ The number of SQL statements per hour, using the `MAX_QUERIES_PER_HOUR` clause. All statements executed by a user are counted toward this limit.
++ The number of updates per hour, using the `MAX_UPDATES_PER_HOUR` clause. Any statement that modifies a database or its tables counts toward this limit.
++ The number of connections per hour, using the `MAX_CONNECTIONS_PER_HOUR` clause. Any connection, from the monitor, a program, or a web script, counts toward this limit.
+
+~~~~
+-- Since we use USAGE, the privileges aren’t affected when the new limits are imposed.
+GRANT USAGE ON *.* to 'partmusic'@'localhost' WITH
+MAX_QUERIES_PER_HOUR 100
+MAX_UPDATES_PER_HOUR 10
+MAX_CONNECTIONS_PER_HOUR 5;
+~~~~
+
++ Another useful parameter to manage the MySQL server load is the `MAX_USER_CONNECTIONS` option. This limits the number of simultaneous clients that can access the server.
+
+
+
 ## 12.4 The mysql_setpermission Program
++ mysql_setpermission is an interactive program that allows you to choose from a menu of routine database and user administration tasks, such as creating a database, setting a user password, and modifying user privileges. 
+~~~
+mysql_setpermission --user=root --password=the_mysql_root_password
+~~~
 ## 13. Managing Privileges with SQL
++ MySQL privileges are managed in five tables(`user, db, tables_priv, col umns_priv, and host.`) in the mysql database. You can manage this database yourself, using queries to manage users and privileges rather than using the GRANT and REVOKE statements. 
 ## 13.1 The user Table
++ Each row has around 30 columns
+  - `User`, `Password`, and `Host` contains the credentials
+  -  Each row also contains a Y or N for each possible privilege.
 ## 13.2 The db Table
++ When you grant privileges for a particular database, they are stored in the db table of the mysql database.
++ The table is similar to the user table but stores privilege values for Host, Db, and User combinations.
 ## 13.3 The tables_priv Table
++ The tables_priv table stores privileges for the table level. 
++ This is similar to the db table but holds privilege values for Host, Db, User, and Table_name combinations.
 ## 13.4 The columns_priv Table
++ The columns_priv table lists which privileges are available for which columns. 
++ It’s only accessed if the tables_priv table says that a privilege is available for one or more col- umns in a table and that privilege isn’t already available at the table level. 
 ## 13.5 The host Table
++ This table isn’t modified or accessed by the GRANT and REVOKE statements. Therefore, it can be maintained only by SQL queries, and so remains unused in most MySQL installations.
 ## 13.6 Activating Privileges
++ Whenever we manipulate the mysql database with SQL statements, we run the `FLUSH PRIVILEGES` statement afterward.
++ You must remember to run FLUSH PRIVILEGES after any privilege or user modifications are per- formed with SQL statements; you don’t need to use FLUSH PRIVILEGES with GRANT or REVOKE, as the server does this for you automatically.
+
+~~~~
+INSERT INTO host VALUES ('localhost', 'music', 'Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y','Y');
+FLUSH PRIVILEGES;
+~~~~
 ## 14. Privileges and Performance
++ when you implement complex user and privilege settings, checking these for each SQL statement you execute adds a performance penalty.
++ When you choose your users and their privileges, you should strive to balance control and performance. Here are some basic tips:
+  - Keep it simple. 
+  - Grant the privilege as high up the hierarchy as possible.
+  - Minimize your use of the host table.
 ## 15. Resetting Forgotten MySQL Passwords
++ If you’ve forgotten a MySQL user password, you can log in to the server as the MySQL root user and update the password manually.
++ If you’ve forgotten the root password, you’ll need to stop the server and restart it in a special way to allow you to change the root password(see details in the textbook).
