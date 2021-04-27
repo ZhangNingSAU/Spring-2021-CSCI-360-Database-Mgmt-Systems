@@ -529,7 +529,9 @@ Think very carefully before granting these privileges:
 + `GRANT OPTION`: This privilege allows one user to pass on privileges to another.
 + `PROCESS`: This allows the user to view current processes, including the statements that started them.
 + `SHUTDOWN`: This allows a user to stop the server.
+
 Tips:
+
 + You should avoid granting any privileges on the special mysql database. This is a default part of any MySQL installation that stores user privileges. Nobody other than the MySQL root user should be able to be read, change, or delete information in this database.
 + Avoid granting access to anonymous users. You should instead require that all users be explicitly identified, along with the hosts they can connect from and the databases that they can access.
 + Choose good passwords: always specify passwords when creating users, and ensure these passwords meet the basic criteria of being hard to guess while remaining straight- forward to remember.
