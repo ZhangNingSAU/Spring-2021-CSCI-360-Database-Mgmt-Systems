@@ -23,7 +23,7 @@ D. Column level<br>
 
 ~~~~
 -- log in as 'user1'@'localhost' and execute the following statement
-GRANT ALL ON music.track* TO 'user2'@'localhost' IDENTIFIED BY 'the_password';
+GRANT ALL ON music.track TO 'user2'@'localhost' IDENTIFIED BY 'the_password';
 ~~~~
 
 + Q4. Which is **NOT** a local user?
