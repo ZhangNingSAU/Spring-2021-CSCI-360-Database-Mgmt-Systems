@@ -7,7 +7,7 @@
 
 ~~~~
 -- log in as 'root'@'localhost' and execute the following statement
-GRANT ALL ON music.track* TO 'user1'@'localhost' IDENTIFIED BY 'the_password';
+GRANT ALL ON music.track TO 'user1'@'localhost' IDENTIFIED BY 'the_password';
 GRANT SELECT(album_id, album_name) ON music.album TO 'user1'@'localhost'
 -- log in as 'user1'@'localhost' and execute the following statement
 SELECT * FROM music.artist
