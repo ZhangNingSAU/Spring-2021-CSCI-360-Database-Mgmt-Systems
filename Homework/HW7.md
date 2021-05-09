@@ -13,7 +13,7 @@ GRANT SELECT(album_id, album_name) ON music.album TO 'user1'@'localhost'
 SELECT * FROM music.artist
 ~~~~
 
-+ Q2: What is the previlidge level of `ON music.track`?
++ Q2: What is the privilege level of `ON music.track`?
 A. Global level<br>
 B. Database level<br>
 C. Table level<br>
