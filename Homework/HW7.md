@@ -26,7 +26,7 @@ D. Column level<br>
 GRANT ALL ON music.track TO 'user2'@'localhost' IDENTIFIED BY 'the_password';
 ~~~~
 
-+ Q4. Which is **NOT** a local user?
++ Q4. Which is **NOT** a local user?<br>
 A. `'user3'@'localhost'`<br>
 B. `'user4'@'127.0.0.1'`<br>
 C. `@'localhost'`<br>
