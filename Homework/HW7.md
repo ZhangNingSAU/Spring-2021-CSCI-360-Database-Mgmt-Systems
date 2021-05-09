@@ -60,7 +60,7 @@ REVOKE SELECT (album_name) ON music.album FROM 'user1'@'localhost';
 SELECT album_id, album_name FROM music.album
 ~~~~~
 
-+ Q7. Which command does **NOT** need to use the `FLUSH PRIVILEGES` instruction to tell the server to read in the updated data(we log in as `'root'@'localhost'`).
++ Q7. Which command does **NOT** need to use the `FLUSH PRIVILEGES` instruction to tell the server to read in the updated data(we log in as `'root'@'localhost'`).<br>
 A. `DROP USER user1`<br>
 B. `DELETE FROM mysql.user WHERE user='user1'`<br>
 C. `UPDATE mysql.user SET user='new_user' WHERE user='user1'`<br>
